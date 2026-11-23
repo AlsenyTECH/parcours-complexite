@@ -16,14 +16,15 @@ Le site comprend aussi une page de **calculateurs** (temps selon la complexité,
 
 ## État
 
-Lancer `python3 build.py` affiche l'avancement module par module. L'étape pilote **3.3 Le tri par insertion**
-(exercice 2 de l'annale UCAD 2024-2025) est entièrement rédigée ; les autres étapes affichent leur fiche
-(objectif, prérequis, lien avec l'examen) en attendant leur cours.
+Lancer `python3 build.py` affiche l'avancement module par module. Rédigés : module 0 (0.1 et 0.2) et l'étape pilote 3.3
+(exercice 2 de l'annale UCAD 2024-2025). Les autres étapes affichent leur fiche (objectif, prérequis, lien avec l'examen)
+en attendant leur cours. Les nombres de chaque module rédigé sont vérifiés par un script de `outils/`.
 
 ## Construire et publier
 
 ```bash
 python3 build.py                     # régénère docs/ à partir du contenu
+python3 outils/verifier_module0.py   # vérifie les nombres et les corrigés du module 0
 python3 outils/verifier_insertion.py # vérifie par simulation les nombres de l'étape 3.3
 cd docs && python3 -m http.server    # aperçu sur http://localhost:8000
 ```

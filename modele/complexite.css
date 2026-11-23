@@ -139,3 +139,7 @@ table.cal-tab td.impossible{color:var(--rouge)}
 .pilote p{margin:0;max-width:62ch}
 .page-simple{max-width:1000px;margin:0 auto;padding:0 max(22px,env(safe-area-inset-left,0px)) 60px}
 .page-simple h1{font-family:var(--f-hand);font-weight:700;color:var(--rouge);font-size:clamp(2.2rem,5vw,3.2rem);margin:28px 0 6px;line-height:1.05}
+.an-case.vu .v{background:var(--grid);color:var(--muted)}
+.an-case.elimine .v{opacity:.35;border-style:dashed}
+.mq.g,.mq.d{background:var(--prof)}
+.mq.m{background:var(--or)}

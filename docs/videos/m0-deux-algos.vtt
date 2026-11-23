@@ -1,0 +1,73 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.907
+Un problème tout simple : on a un tableau de n valeurs, et on veut savoir si une
+
+2
+00:00:04.907 --> 00:00:09.507
+valeur x s'y trouve. On va comparer deux méthodes, en comptant le nombre de
+
+3
+00:00:09.507 --> 00:00:10.304
+comparaisons.
+
+4
+00:00:11.004 --> 00:00:15.847
+Première méthode : on regarde les cases une par une, de gauche à droite. Si x est
+
+5
+00:00:15.847 --> 00:00:20.391
+absent, il faut les avoir toutes regardées pour l'affirmer : n comparaisons.
+
+6
+00:00:21.091 --> 00:00:26.079
+Deuxième méthode, si le tableau est trié : on regarde la case du milieu. Si elle est
+
+7
+00:00:26.079 --> 00:00:30.770
+plus petite que x, alors x ne peut être que dans la moitié droite. En une seule
+
+8
+00:00:30.770 --> 00:00:33.443
+comparaison, on élimine la moitié du tableau.
+
+9
+00:00:34.143 --> 00:00:39.216
+Après un tour, il reste au plus n sur deux cases. Après deux tours, n sur quatre.
+
+10
+00:00:39.216 --> 00:00:44.477
+Après k tours, n sur deux puissance k. On s'arrête quand il reste moins d'une case :
+
+11
+00:00:44.477 --> 00:00:47.796
+au bout d'environ logarithme en base deux de n tours.
+
+12
+00:00:48.496 --> 00:00:52.860
+Comparons. Pour mille cases : mille comparaisons contre dix. Pour un million : un
+
+13
+00:00:52.860 --> 00:00:56.794
+million contre vingt. Pour un milliard : un milliard contre trente. À une
+
+14
+00:00:56.794 --> 00:01:01.104
+microseconde la comparaison, c'est dix-sept minutes contre trente microsecondes.
+
+15
+00:01:01.804 --> 00:01:05.801
+Le plus important est là : quand n est multiplié par mille, la recherche
+
+16
+00:01:05.801 --> 00:01:09.853
+séquentielle devient mille fois plus lente, la dichotomie ne fait que dix
+
+17
+00:01:09.853 --> 00:01:14.405
+comparaisons de plus. Ce qui compte, ce n'est pas le nombre d'opérations pour un n
+
+18
+00:01:14.405 --> 00:01:18.401
+donné, c'est la façon dont il grandit avec n. C'est cela, la complexité.

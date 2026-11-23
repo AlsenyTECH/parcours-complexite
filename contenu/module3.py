@@ -260,7 +260,11 @@ print(tri_insertion([3, 8, 2, 6]))
     déjà triés, au hasard (moyenne de 8 essais) et triés à l'envers. Il trace le nombre de tests compté,
     avec en pointillés les trois formules démontrées : \(n - 1\), \(\frac{n^2+3n-4}{4}\) et \(\frac{n(n+1)}{2} - 1\).</p>""",
     "tri_insertion", [10, 25, 50, 100, 150, 200, 300, 400],
-    [["n(n+1)/2 − 1", "n*(n+1)/2 - 1"], ["(n²+3n−4)/4", "(n*n + 3*n - 4)/4"], ["n − 1", "n - 1"]]) + r"""
+    [["n(n+1)/2 − 1", "n*(n+1)/2 - 1"], ["(n²+3n−4)/4", "(n*n + 3*n - 4)/4"], ["n − 1", "n - 1"]],
+    [{"nom": "pire cas (trié à l'envers)", "court": "pire", "expr": "(list(range(n, 0, -1)),)", "couleur": "pire"},
+     {"nom": "moyenne sur 8 tableaux au hasard", "court": "moyen", "expr": "(random.sample(range(10 * n), n),)", "couleur": "moyen", "essais": 8},
+     {"nom": "meilleur cas (déjà trié)", "court": "meilleur", "expr": "(list(range(n)),)", "couleur": "meilleur"}],
+    [["pire / n²", 0, "n*n"], ["moyen / n²", 1, "n*n"]]) + r"""
 """ + prof(r"""<p>Regarde les deux dernières colonnes du tableau : « pire / \(n^2\) » se rapproche de \(\frac12\), et « moyen / \(n^2\) » de \(\frac14\).
 C'est le sens concret de \(\Theta(n^2)\) : le rapport au carré de \(n\) se stabilise. La courbe verte, elle, est collée à l'axe :
 \(n - 1\) est négligeable devant \(n^2\).</p>""")

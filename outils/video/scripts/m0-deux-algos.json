@@ -1,0 +1,122 @@
+{
+ "fichier": "m0-deux-algos.mp4",
+ "titre": "Un million de cases, vingt comparaisons",
+ "scenes": [
+  {
+   "legende": "Le problème",
+   "voix": "Un problème tout simple : on a un tableau de n valeurs, et on veut savoir si une valeur x s'y trouve. On va comparer deux méthodes, en comptant le nombre de comparaisons.",
+   "lignes": [
+    [
+     "rouge",
+     "x est-il dans T[1..n] ?"
+    ],
+    [
+     "bleu",
+     "on compte les comparaisons"
+    ]
+   ]
+  },
+  {
+   "efface": true,
+   "legende": "Méthode 1 : la recherche séquentielle",
+   "voix": "Première méthode : on regarde les cases une par une, de gauche à droite. Si x est absent, il faut les avoir toutes regardées pour l'affirmer : n comparaisons.",
+   "lignes": [
+    [
+     "rouge",
+     "Recherche séquentielle"
+    ],
+    [
+     "bleu",
+     "case 1, case 2, case 3, …"
+    ],
+    [
+     "vert",
+     "au pire : n comparaisons"
+    ]
+   ]
+  },
+  {
+   "efface": true,
+   "legende": "Méthode 2 : couper en deux",
+   "voix": "Deuxième méthode, si le tableau est trié : on regarde la case du milieu. Si elle est plus petite que x, alors x ne peut être que dans la moitié droite. En une seule comparaison, on élimine la moitié du tableau.",
+   "lignes": [
+    [
+     "rouge",
+     "Recherche dichotomique (tableau trié)"
+    ],
+    [
+     "bleu",
+     "on compare x au milieu T[m]"
+    ],
+    [
+     "bleu",
+     "T[m] < x  →  on garde la moitié droite"
+    ],
+    [
+     "bleu",
+     "T[m] > x  →  on garde la moitié gauche"
+    ]
+   ]
+  },
+  {
+   "legende": "Méthode 2 : couper en deux",
+   "voix": "Après un tour, il reste au plus n sur deux cases. Après deux tours, n sur quatre. Après k tours, n sur deux puissance k. On s'arrête quand il reste moins d'une case : au bout d'environ logarithme en base deux de n tours.",
+   "lignes": [
+    [
+     "bleu",
+     "n  →  n/2  →  n/4  →  …  →  n/2ᵏ"
+    ],
+    [
+     "vert",
+     "au pire : ⌊log₂ n⌋ + 1 comparaisons"
+    ]
+   ]
+  },
+  {
+   "efface": true,
+   "legende": "L'écart",
+   "voix": "Comparons. Pour mille cases : mille comparaisons contre dix. Pour un million : un million contre vingt. Pour un milliard : un milliard contre trente. À une microseconde la comparaison, c'est dix-sept minutes contre trente microsecondes.",
+   "lignes": [
+    [
+     "rouge",
+     "séquentielle  contre  dichotomie"
+    ],
+    [
+     "bleu",
+     "n = 1 000 :  1 000  contre  10"
+    ],
+    [
+     "bleu",
+     "n = 10⁶ :  10⁶  contre  20"
+    ],
+    [
+     "bleu",
+     "n = 10⁹ :  10⁹  contre  30"
+    ],
+    [
+     "vert",
+     "17 min  contre  30 µs"
+    ]
+   ]
+  },
+  {
+   "efface": true,
+   "legende": "Ce qui compte : la croissance",
+   "voix": "Le plus important est là : quand n est multiplié par mille, la recherche séquentielle devient mille fois plus lente, la dichotomie ne fait que dix comparaisons de plus. Ce qui compte, ce n'est pas le nombre d'opérations pour un n donné, c'est la façon dont il grandit avec n. C'est cela, la complexité.",
+   "lignes": [
+    [
+     "bleu",
+     "n × 1000  →  séquentielle × 1000"
+    ],
+    [
+     "bleu",
+     "n × 1000  →  dichotomie + 10"
+    ],
+    [
+     "vert",
+     "la complexité = la croissance avec n"
+    ]
+   ]
+  }
+ ]
+}

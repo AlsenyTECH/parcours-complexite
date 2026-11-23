@@ -1,0 +1,21 @@
+{
+  "fichier": "m0-attaque.mp4",
+  "titre": "Pourquoi 128 bits suffisent",
+  "scenes": [
+    {"legende": "L'attaque universelle",
+     "voix": "Un chiffrement est public, seule la clé est secrète. Un attaquant qui connaît un message clair et son chiffré peut toujours essayer toutes les clés, une par une. C'est la recherche exhaustive. Elle marche contre tous les chiffrements.",
+     "lignes": [["rouge", "La recherche exhaustive"], ["bleu", "on connaît m et c = Chiffrer(m, clé)"], ["bleu", "on essaie toutes les clés k"]]},
+    {"efface": true, "legende": "Combien de clés ?",
+     "voix": "Une clé de b bits : chaque bit vaut zéro ou un, donc il y a deux puissance b clés. Au pire, il faut toutes les essayer. En moyenne, la bonne clé est au milieu de la liste : environ deux puissance b moins un essais.",
+     "lignes": [["bleu", "clé de b bits  →  2ᵇ clés"], ["bleu", "au pire : 2ᵇ essais"], ["vert", "en moyenne : (2ᵇ + 1)/2 ≈ 2ᵇ⁻¹"]]},
+    {"efface": true, "legende": "Le prix d'un bit",
+     "voix": "Voici la clé de toute la cryptographie symétrique. Ajouter un bit à la clé double le nombre de clés, donc double le temps de l'attaque. Dix bits de plus, c'est deux puissance dix, environ mille fois plus long. L'attaque est exponentielle en la taille de la clé.",
+     "lignes": [["rouge", "+1 bit  →  temps × 2"], ["rouge", "+10 bits  →  temps × 1000"], ["vert", "coût exponentiel en b"]]},
+    {"efface": true, "legende": "Les ordres de grandeur",
+     "voix": "Avec une grappe qui teste mille milliards de clés par seconde : une clé de cinquante-six bits, celle de l'ancien standard DES, tombe en dix heures. Quatre-vingts bits : dix-neuf mille ans. Cent vingt-huit bits, celle d'AES : cinq milliards de milliards d'années.",
+     "lignes": [["bleu", "à 10¹² clés par seconde :"], ["bleu", "56 bits (DES)  →  10 heures"], ["bleu", "80 bits  →  19 000 ans"], ["vert", "128 bits (AES)  →  5 × 10¹⁸ ans"]]},
+    {"efface": true, "legende": "La défense gagne la course",
+     "voix": "Et si l'attaquant achète mille fois plus de machines ? Cela revient seulement à retirer dix bits à la clé. Si la puissance de calcul double tous les deux ans, l'attaquant gagne un bit tous les deux ans. Les quarante-huit bits d'avance entre quatre-vingts et cent vingt-huit, c'est environ un siècle.",
+     "lignes": [["bleu", "vitesse × 2ᵃ  ⇔  clé − a bits"], ["bleu", "× 1000 machines  ⇔  − 10 bits"], ["vert", "128 bits : une marge d'un siècle"]]}
+  ]
+}

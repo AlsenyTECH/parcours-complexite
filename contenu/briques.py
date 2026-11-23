@@ -215,20 +215,27 @@ def animateur(ident, algo, entrees, legende):
             % (ident, algo, html.escape(json.dumps(entrees, ensure_ascii=False)), legende))
 
 
-def mesure(ident, consigne, fonction, tailles, courbes):
-    """Mesure expérimentale : le code de l'atelier `ident` est lancé sur des entrées de tailles croissantes ;
-    le nombre d'opérations compté est tracé, avec les courbes théoriques à comparer.
+def mesure(ident, consigne, fonction, tailles, courbes, cas, ratios=(), axe="taille n du tableau"):
+    """Mesure expérimentale : la fonction `fonction` de l'atelier `ident` est lancée sur des entrées
+    de tailles croissantes ; le compteur qu'elle renvoie (2e élément du couple) est tracé.
 
-    fonction  nom de la fonction de l'étudiant, qui renvoie (resultat, compteur)
-    tailles   liste de n
-    courbes   liste de (nom, expression JavaScript en n) tracées en pointillés
+    tailles  liste de n
+    courbes  liste de (nom, expression JavaScript en n), tracées en pointillés
+    cas      liste de dicts {"nom", "court", "expr", "couleur", "essais"} :
+             expr est une expression Python en n (modules random disponibles) qui renvoie
+             le TUPLE des arguments ; couleur ∈ meilleur | moyen | pire | autre ; essais > 1 = moyenne ;
+             "fonction" (facultatif) : une autre fonction de l'atelier pour ce cas
+    ratios   liste de (titre de colonne, indice du cas, expression JavaScript en n) : colonne cas / f(n)
     """
-    return ('<div class="mesure" data-atelier="%s" data-fonction="%s" data-tailles="%s" data-courbes="%s">'
+    return ('<div class="mesure" data-atelier="%s" data-fonction="%s" data-tailles="%s" data-courbes="%s" '
+            'data-cas="%s" data-ratios="%s" data-axe="%s">'
             '<p class="lab">Mesure — ce que ton code fait vraiment</p>%s'
             '<div class="atelier-b"><button type="button" class="btn m-lancer">Mesurer et tracer</button>'
             '<span class="m-etat" role="status"></span></div>'
             '<div class="m-graphe" hidden></div></div>'
-            % (ident, fonction, json.dumps(tailles), html.escape(json.dumps(courbes, ensure_ascii=False)), consigne))
+            % (ident, fonction, json.dumps(tailles), html.escape(json.dumps(courbes, ensure_ascii=False)),
+               html.escape(json.dumps(cas, ensure_ascii=False)), html.escape(json.dumps(list(ratios), ensure_ascii=False)),
+               html.escape(axe), consigne))
 
 
 def tableau(entetes, lignes, classe=""):

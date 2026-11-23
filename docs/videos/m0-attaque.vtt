@@ -1,0 +1,73 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.406
+Un chiffrement est public, seule la clé est secrète. Un attaquant qui connaît un
+
+2
+00:00:04.406 --> 00:00:08.813
+message clair et son chiffré peut toujours essayer toutes les clés, une par une.
+
+3
+00:00:08.813 --> 00:00:12.779
+C'est la recherche exhaustive. Elle marche contre tous les chiffrements.
+
+4
+00:00:13.479 --> 00:00:18.248
+Une clé de b bits : chaque bit vaut zéro ou un, donc il y a deux puissance b clés.
+
+5
+00:00:18.248 --> 00:00:22.959
+Au pire, il faut toutes les essayer. En moyenne, la bonne clé est au milieu de la
+
+6
+00:00:22.959 --> 00:00:25.809
+liste : environ deux puissance b moins un essais.
+
+7
+00:00:26.509 --> 00:00:31.163
+Voici la clé de toute la cryptographie symétrique. Ajouter un bit à la clé double le
+
+8
+00:00:31.163 --> 00:00:35.540
+nombre de clés, donc double le temps de l'attaque. Dix bits de plus, c'est deux
+
+9
+00:00:35.540 --> 00:00:39.861
+puissance dix, environ mille fois plus long. L'attaque est exponentielle en la
+
+10
+00:00:39.861 --> 00:00:40.803
+taille de la clé.
+
+11
+00:00:41.503 --> 00:00:45.355
+Avec une grappe qui teste mille milliards de clés par seconde : une clé de
+
+12
+00:00:45.355 --> 00:00:49.103
+cinquante-six bits, celle de l'ancien standard DES, tombe en dix heures.
+
+13
+00:00:49.103 --> 00:00:53.320
+Quatre-vingts bits : dix-neuf mille ans. Cent vingt-huit bits, celle d'AES : cinq
+
+14
+00:00:53.320 --> 00:00:54.985
+milliards de milliards d'années.
+
+15
+00:00:55.685 --> 00:00:59.899
+Et si l'attaquant achète mille fois plus de machines ? Cela revient seulement à
+
+16
+00:00:59.899 --> 00:01:04.059
+retirer dix bits à la clé. Si la puissance de calcul double tous les deux ans,
+
+17
+00:01:04.059 --> 00:01:08.379
+l'attaquant gagne un bit tous les deux ans. Les quarante-huit bits d'avance entre
+
+18
+00:01:08.379 --> 00:01:11.472
+quatre-vingts et cent vingt-huit, c'est environ un siècle.
