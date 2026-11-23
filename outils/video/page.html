@@ -1,0 +1,52 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Caveat;font-weight:500;src:url(polices/caveat-latin-500-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(polices/caveat-latin-700-normal.woff2)}
+@font-face{font-family:Kalam;font-weight:400;src:url(polices/kalam-latin-400-normal.woff2)}
+*{box-sizing:border-box}
+html,body{margin:0;width:1280px;height:720px;overflow:hidden}
+body{background:#fbfcfe;font-family:Caveat,'DejaVu Sans',sans-serif;
+  background-image:linear-gradient(#dfe6f3 1px,transparent 1px),linear-gradient(90deg,#dfe6f3 1px,transparent 1px);
+  background-size:32px 32px}
+#marge{position:absolute;left:96px;top:0;bottom:0;width:2px;background:#e9a3a8}
+#signature{position:absolute;right:34px;top:20px;font-size:30px;color:#8a94ad;font-weight:500}
+#feuille{position:absolute;left:128px;right:60px;top:70px;bottom:120px;display:flex;flex-direction:column;gap:6px}
+.ligne{font-size:50px;line-height:64px;white-space:pre;font-weight:500;min-height:64px}
+.bleu{color:#1c3bb0}.rouge{color:#bd1f2b;font-weight:700;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:7px}
+.vert{color:#0a7441;font-weight:700}
+.ligne sub{font-size:.62em;vertical-align:-.28em;line-height:0}
+.plume{display:inline-block;width:13px;height:13px;border-radius:50%;background:currentColor;margin-left:5px;vertical-align:8px}
+#legende{position:absolute;left:128px;right:60px;bottom:28px;height:70px;background:#e9f5ee;border-left:6px solid #0a7441;border-radius:0 6px 6px 0;
+  color:#0a7441;font-family:Kalam,'DejaVu Sans',sans-serif;font-size:30px;display:flex;align-items:center;padding:0 22px}
+</style></head><body>
+<div id="marge"></div><div id="signature">Parcours Complexité · MathNexus</div>
+<div id="feuille"></div><div id="legende"></div>
+<script>
+/* Rendu déterministe : afficher(t) dessine l'image à l'instant t (secondes). */
+let SCENES = [];
+function charger(scenes){ SCENES = scenes; }
+function afficher(t){
+  let k = SCENES.findIndex(s => t < s.fin); if (k < 0) k = SCENES.length - 1;
+  const sc = SCENES[k];
+  // lignes déjà écrites depuis le dernier effacement
+  let debut = k; while (debut > 0 && !SCENES[debut].efface) debut--;
+  const feuille = document.getElementById('feuille'); feuille.innerHTML = '';
+  for (let i = debut; i < k; i++) for (const [c, txt] of SCENES[i].lignes) ajoute(c, txt, txt.length, false);
+  // écriture en cours : répartie sur 82 % de la durée de la voix, après 0,4 s
+  const total = sc.lignes.reduce((n, l) => n + l[1].length, 0);
+  const avance = Math.max(0, Math.min(1, (t - sc.debut - 0.4) / (sc.voix * 0.82)));
+  let reste = Math.floor(avance * total), plume = avance < 1;
+  for (const [c, txt] of sc.lignes){
+    if (reste <= 0 && !(plume && reste === 0 && txt === sc.lignes[0][1])) break;
+    const n = Math.min(txt.length, reste);
+    ajoute(c, txt, n, plume && n < txt.length);
+    reste -= n; if (n < txt.length) break;
+  }
+  document.getElementById('legende').textContent = sc.legende;
+  function ajoute(c, txt, n, avecPlume){
+    const d = document.createElement('div'); d.className = 'ligne ' + c; d.innerHTML = txt.slice(0, n).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/[₀₁₂₃₄₅₆₇₈₉]/g,function(c){return '<sub>'+'₀₁₂₃₄₅₆₇₈₉'.indexOf(c)+'</sub>';}).replace(/ⱼ/g,'<sub>j</sub>');
+    if (avecPlume){ const p = document.createElement('span'); p.className = 'plume'; d.appendChild(p); }
+    feuille.appendChild(d);
+  }
+}
+</script></body></html>

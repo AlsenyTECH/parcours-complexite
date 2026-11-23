@@ -1,0 +1,153 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.587
+Dans cette vidéo, on calcule le coût du tri par insertion, exactement comme le
+
+2
+00:00:04.587 --> 00:00:09.409
+demande l'exercice deux de l'annale. D'abord l'idée, ensuite le tableau des coûts,
+
+3
+00:00:09.409 --> 00:00:11.349
+enfin le meilleur et le pire cas.
+
+4
+00:00:12.049 --> 00:00:16.681
+L'idée, c'est celle des cartes qu'on range dans sa main. La partie gauche du tableau
+
+5
+00:00:16.681 --> 00:00:21.092
+est déjà triée. On met de côté la clé, T de j, puis on décale d'une case vers la
+
+6
+00:00:21.092 --> 00:00:25.503
+droite tous les éléments plus grands qu'elle. Il reste une case libre : c'est la
+
+7
+00:00:25.503 --> 00:00:26.385
+place de la clé.
+
+8
+00:00:27.085 --> 00:00:31.708
+Toute la difficulté tient dans une seule quantité : t j, le nombre de fois où le
+
+9
+00:00:31.708 --> 00:00:36.504
+test de la ligne cinq est évalué pendant le passage j. Chaque test vrai provoque un
+
+10
+00:00:36.504 --> 00:00:41.358
+décalage. Le dernier test, lui, est faux, et fait sortir de la boucle. Donc il y a t
+
+11
+00:00:41.358 --> 00:00:44.536
+j moins un décalages, et t j est compris entre un et j.
+
+12
+00:00:45.236 --> 00:00:49.864
+On fait maintenant le tableau, ligne par ligne. La ligne un, le test de la boucle
+
+13
+00:00:49.864 --> 00:00:54.434
+pour, s'exécute n fois : n moins un tests vrais, plus le dernier test, faux, qui
+
+14
+00:00:54.434 --> 00:00:59.062
+fait sortir. Les lignes deux, quatre et huit s'exécutent une fois par passage : n
+
+15
+00:00:59.062 --> 00:01:00.319
+moins un fois chacune.
+
+16
+00:01:01.019 --> 00:01:05.895
+La ligne cinq s'exécute somme des t j fois. Les lignes six et sept s'exécutent une
+
+17
+00:01:05.895 --> 00:01:10.534
+fois par test vrai : somme des t j moins un, chacune. Et la ligne trois est un
+
+18
+00:01:10.534 --> 00:01:12.496
+commentaire : elle ne coûte rien.
+
+19
+00:01:13.196 --> 00:01:18.147
+Chaque instruction simple coûte c. On additionne tout. Comme la somme des t j moins
+
+20
+00:01:18.147 --> 00:01:23.158
+un vaut la somme des t j, moins n moins un, la formule se simplifie : T de n égale c
+
+21
+00:01:23.158 --> 00:01:26.081
+fois, trois somme des t j, plus deux n, moins un.
+
+22
+00:01:26.781 --> 00:01:31.468
+Vérifions sur le tableau de l'annale : trois, huit, deux, six. Les t j valent un,
+
+23
+00:01:31.468 --> 00:01:36.329
+trois et deux. Leur somme fait six. Donc T de quatre égale c fois dix-huit plus sept
+
+24
+00:01:36.329 --> 00:01:39.453
+: vingt-cinq c. C'est aussi ce que compte l'animateur.
+
+25
+00:01:40.153 --> 00:01:44.816
+Le meilleur cas. Le test est toujours évalué au moins une fois, donc chaque t j vaut
+
+26
+00:01:44.816 --> 00:01:49.313
+au moins un. Il vaut exactement un quand la clé est déjà à sa place, c'est-à-dire
+
+27
+00:01:49.313 --> 00:01:53.753
+quand le tableau est trié. Alors la somme des t j vaut n moins un, et T min de n
+
+28
+00:01:53.753 --> 00:01:56.473
+égale c fois cinq n moins quatre. C'est linéaire.
+
+29
+00:01:57.173 --> 00:02:01.719
+Le pire cas. L'indice i descend au plus de j moins un jusqu'à zéro : t j vaut au
+
+30
+00:02:01.719 --> 00:02:06.377
+plus j. Sur un tableau trié à l'envers, chaque clé est plus petite que tout ce qui
+
+31
+00:02:06.377 --> 00:02:11.036
+la précède, elle remonte jusqu'au début, et t j égale j. La somme des j, de deux à
+
+32
+00:02:11.036 --> 00:02:13.536
+n, vaut n fois n plus un sur deux, moins un.
+
+33
+00:02:14.236 --> 00:02:19.350
+On remplace dans la formule. T max de n égale c fois, trois n carré sur deux, plus
+
+34
+00:02:19.350 --> 00:02:24.090
+sept n sur deux, moins quatre. Le terme dominant est en n carré : le tri par
+
+35
+00:02:24.090 --> 00:02:26.460
+insertion est quadratique au pire cas.
+
+36
+00:02:27.160 --> 00:02:31.697
+À retenir : linéaire sur un tableau trié, quadratique au pire cas, et quadratique
+
+37
+00:02:31.697 --> 00:02:36.178
+aussi en moyenne, à peu près la moitié du pire. Maintenant, fais-le tourner dans
+
+38
+00:02:36.178 --> 00:02:38.979
+l'animateur, puis code-le toi-même dans l'atelier.
