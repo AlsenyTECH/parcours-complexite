@@ -216,7 +216,8 @@ def page_accueil():
   </section>
   <div class="pilote">
     <p><strong>Étape pilote, entièrement rédigée : 3.3 Le tri par insertion.</strong> Animateur pas à pas,
-    calcul complet de T(n), atelier de code avec mesure, exercices et corrigé de l'exercice 2 de l'annale 2024-2025.</p>
+    calcul complet de T(n), atelier de code avec mesure, exercices et corrigé de l'exercice 2
+    d'un vrai sujet d'examen du cours (session 2024-2025).</p>
     <a class="btn" href="module-3.html#m3-insertion">Ouvrir l'étape pilote →</a>
   </div>
   <h2 class="sec">Comment travailler</h2>
@@ -229,14 +230,15 @@ def page_accueil():
   <p class="prog-txt" id="prog-globale" style="margin-top:14px"></p>
   <h2 class="sec">Les 10 modules</h2>
   <p>%s Les autres affichent déjà leur objectif, leurs prérequis et leur lien avec l'examen.
-  Les étapes marquées <span class="pastille exam">examen</span> préparent directement une question d'annale.</p>
+  Les étapes marquées <span class="pastille exam">examen</span> préparent directement une question tirée
+  d'un sujet d'examen réel de ce cours — utile même si tu prépares un autre examen : la méthode compte plus que l'énoncé.</p>
   <div class="mods">%s</div>
   <h2 class="sec">Les outils</h2>
   <div class="cartes">
     <a class="niv-card" href="calculateurs.html"><p class="k">Outil</p><h3>Calculateurs</h3>
       <p>Combien de temps pour n² ou 2ⁿ opérations ? Quelle taille traiter en une heure ? Combien coûte une attaque sur 128 bits ?</p></a>
     <a class="niv-card" href="module-9.html"><p class="k">Module 9</p><h3>Préparer l'examen</h3>
-      <p>Ce que le correcteur attend, annales corrigées et évaluations chronométrées.</p></a>
+      <p>Ce que le correcteur attend, sujets d'examens corrigés et évaluations chronométrées.</p></a>
   </div>
 </main>
 %s""" % (barre("index.html"), total,

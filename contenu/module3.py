@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module 3 — Analyser un algorithme itératif.
 
-Étape pilote : 3.3 Le tri par insertion (exercice 2 de l'annale 2024-2025).
+Étape pilote : 3.3 Le tri par insertion (exercice 2 d'un sujet d'examen réel, session 2024-2025).
 Toutes les valeurs numériques de cette page (traces, tⱼ, T(n), moyennes) ont été vérifiées
 par simulation : voir outils/verifier_insertion.py.
 """
@@ -41,7 +41,9 @@ avec la carte suivante. Le tri par insertion, c'est exactement ce geste.</p>
 """ + video("m3-insertion.mp4", "Le tri par insertion au tableau : l'exemple, le comptage ligne par ligne, le meilleur et le pire cas", "7 min 41") + r"""
 
 <h3>L'algorithme</h3>
-<p>Voici la version de l'annale 2024-2025, avec sa numérotation de lignes. Le tableau est indexé de 1 à \(n\).</p>
+<p>Voici l'algorithme tel qu'il a été donné dans un vrai sujet d'examen du cours (session 2024-2025) — on s'en sert
+comme fil conducteur pour toute l'étape, mais la méthode qui suit vaut pour n'importe quel sujet, pas seulement
+celui-ci. Le tableau est indexé de 1 à \(n\).</p>
 """ + PSEUDO + r"""
 <p>À chaque tour de la boucle <strong>Pour</strong>, la partie gauche \(T[1..j-1]\) est déjà triée.
 On met de côté la <em>clé</em> \(T[j]\) (ligne 2), puis on remonte vers la gauche avec l'indice \(i\) (lignes 4 à 7) :
@@ -55,9 +57,9 @@ et tiens-la jusqu'au bout. La complexité asymptotique ne change pas.</p>""") + 
 <h3>Fais-le tourner</h3>
 <p>L'animateur exécute l'algorithme instruction par instruction. Regarde trois choses : la ligne surlignée,
 la colonne <em>exéc.</em> qui compte combien de fois chaque ligne a été exécutée, et le tableau des \(t_j\).
-Commence par l'entrée de l'annale, puis compare « déjà trié » et « trié à l'envers ».</p>
+Commence par l'exemple du sujet d'examen, puis compare « déjà trié » et « trié à l'envers ».</p>
 """ + animateur("anim-insertion", "insertion", [
-    ["Annale : 3, 8, 2, 6", [3, 8, 2, 6]],
+    ["Exemple de l'examen : 3, 8, 2, 6", [3, 8, 2, 6]],
     ["Déjà trié", [1, 2, 3, 4, 5, 6]],
     ["Trié à l'envers", [6, 5, 4, 3, 2, 1]],
     ["Avec doublons", [4, 2, 4, 1, 3]],
@@ -71,7 +73,7 @@ ligne 5 (« \(i > 0\) et \(T[i] > \text{clé}\) ») est évalué pendant le pass
 <p>Le minimum \(t_j = 1\) arrive quand la clé est déjà à sa place (le premier test est faux). Le maximum \(t_j = j\) arrive quand la clé
 doit aller tout au début : \(i\) prend les valeurs \(j-1, j-2, \dots, 1\) (\(j-1\) tests vrais), puis \(i = 0\) (un test faux).</p>
 
-""" + a_toi(r"""<p><strong>Annale 2024-2025, exercice 2, questions 1 et 2.</strong> On donne \(T = [3, 8, 2, 6]\).
+""" + a_toi(r"""<p><strong>Sujet d'examen 2024-2025, exercice 2, questions 1 et 2.</strong> On donne \(T = [3, 8, 2, 6]\).
 Sans l'animateur, écris l'état du tableau après chaque passage de la boucle Pour, la valeur de la clé,
 les décalages effectués et la valeur de \(t_j\). Quelle est la valeur finale de \(T\) ?</p>""",
 r"""""" + tableau(
@@ -134,7 +136,7 @@ et seul le dernier des \(t_j\) tests est faux.</li>
 </ul>
 <p>En additionnant :</p>
 \[ T(n) = c_1 n + (c_2 + c_4 + c_8)(n-1) + c_5 \sum_{j=2}^{n} t_j + (c_6 + c_7) \sum_{j=2}^{n} (t_j - 1). \]
-<p>L'annale demande le cas où toutes les instructions simples coûtent la même constante \(c\). Comme
+<p>Le sujet demande le cas où toutes les instructions simples coûtent la même constante \(c\). Comme
 \(\sum_{j=2}^{n}(t_j - 1) = \sum_{j=2}^{n} t_j - (n-1)\) :</p>
 \[ T(n) = c\Big[\, n + 3(n-1) + \sum_{j=2}^{n} t_j + 2\Big(\sum_{j=2}^{n} t_j - (n-1)\Big)\Big] \]
 """ + retenir("Le coût du tri par insertion", r"""\[ T(n) = c\Big(3\sum_{j=2}^{n} t_j + 2n - 1\Big). \]
@@ -190,7 +192,8 @@ on suppose les éléments distincts et les \(n!\) ordres possibles <strong>équi
     \[ \mathbb{E}\Big[\sum_{j=2}^{n} t_j\Big] = \frac12 \sum_{j=2}^{n} (j+1) = \frac12\Big(\frac{(n+1)(n+2)}{2} - 3\Big) = \frac{n^2 + 3n - 4}{4}, \]
     et \(T_{\text{moy}}(n) = c\big(3 \cdot \frac{n^2+3n-4}{4} + 2n - 1\big) = c\big(\frac{3n^2}{4} + \frac{17n}{4} - 4\big)\).</p>""") + r"""
 
-""" + examen(r"""<p>Pour l'exercice 2 de l'annale, voici ce qui rapporte les points, et pourquoi.</p>
+""" + examen(r"""<p>Pour l'exercice 2 de ce sujet d'examen, voici ce qui rapporte les points, et pourquoi — la logique
+vaut pour n'importe quel exercice de complexité, pas seulement celui-ci.</p>
 <ul>
 <li><strong>Le tableau ligne / coût / nombre d'exécutions.</strong> C'est la preuve que tu as compté. Une formule écrite seule semble sortie de nulle part :
 le correcteur ne peut pas savoir si elle est juste par hasard.</li>
@@ -235,7 +238,7 @@ Puis tu le lanceras sur des tableaux de plus en plus grands pour <em>voir</em> l
 print(tri_insertion([3, 8, 2, 6]))
 ''',
     [
-        {"appel": "tri_insertion([3, 8, 2, 6])", "verif": "r == ([2, 3, 6, 8], 6)", "attendu": "([2, 3, 6, 8], 6) — l'exemple de l'annale"},
+        {"appel": "tri_insertion([3, 8, 2, 6])", "verif": "r == ([2, 3, 6, 8], 6)", "attendu": "([2, 3, 6, 8], 6) — l'exemple de l'énoncé"},
         {"appel": "tri_insertion([])", "verif": "r == ([], 0)", "attendu": "([], 0) : aucun passage, aucun test"},
         {"appel": "tri_insertion([5])", "verif": "r == ([5], 0)", "attendu": "([5], 0)"},
         {"appel": "tri_insertion(list(range(1, 11)))", "verif": "r == (list(range(1, 11)), 9)", "attendu": "tableau trié de taille 10 : 9 tests (meilleur cas, n − 1)"},
@@ -278,7 +281,7 @@ C'est le sens concret de \(\Theta(n^2)\) : le rapport au carré de \(n\) se stab
 # ─────────────────────────────────────────────────────────────────────────────
 EXERCER = r"""
 <p class="lead">Les exercices sont gradués. Fais-les sur une feuille, puis compare ta rédaction avec la correction, ligne à ligne.</p>
-""" + exercice(1, "annale", r"""<p><strong>Annale 2024-2025, exercice 2, questions 3 à 5.</strong> Rédige comme le jour de l'examen :</p>
+""" + exercice(1, "examen", r"""<p><strong>Sujet d'examen 2024-2025, exercice 2, questions 3 à 5.</strong> Rédige comme le jour de l'examen :</p>
 <ol start="3"><li>Exprime le coût \(T(n)\) en fonction de \(c\), des \(t_j\) et de \(n\).</li>
 <li>Exprime \(T_{\min}(n)\), le coût dans le meilleur des cas.</li>
 <li>Exprime \(T_{\max}(n)\), le coût dans le pire des cas.</li></ol>""",
