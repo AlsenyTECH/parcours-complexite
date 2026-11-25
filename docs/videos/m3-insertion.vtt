@@ -1,153 +1,629 @@
 WEBVTT
 
 1
-00:00:00.000 --> 00:00:04.587
-Dans cette vidéo, on calcule le coût du tri par insertion, exactement comme le
+00:00:00.600 --> 00:00:03.851
+Bonjour ! Dans ce tuto, on répond à une question précise :
 
 2
-00:00:04.587 --> 00:00:09.409
-demande l'exercice deux de l'annale. D'abord l'idée, ensuite le tableau des coûts,
+00:00:03.851 --> 00:00:05.869
+combien coûte le tri par insertion ?
 
 3
-00:00:09.409 --> 00:00:11.349
-enfin le meilleur et le pire cas.
+00:00:06.219 --> 00:00:10.647
+Attention : je ne veux pas une réponse du genre « il est rapide » ou « il est lent ».
 
 4
-00:00:12.049 --> 00:00:16.681
-L'idée, c'est celle des cartes qu'on range dans sa main. La partie gauche du tableau
+00:00:10.647 --> 00:00:14.294
+Je veux un nombre d'opérations, en fonction de la taille n du tableau.
 
 5
-00:00:16.681 --> 00:00:21.092
-est déjà triée. On met de côté la clé, T de j, puis on décale d'une case vers la
+00:00:14.294 --> 00:00:17.419
+C'est exactement ce que demande l'exercice deux de l'annale.
 
 6
-00:00:21.092 --> 00:00:25.503
-droite tous les éléments plus grands qu'elle. Il reste une case libre : c'est la
+00:00:17.769 --> 00:00:19.572
+On va procéder en trois temps.
 
 7
-00:00:25.503 --> 00:00:26.385
-place de la clé.
+00:00:19.572 --> 00:00:22.455
+D'abord, comprendre l'algorithme sur un exemple.
 
 8
-00:00:27.085 --> 00:00:31.708
-Toute la difficulté tient dans une seule quantité : t j, le nombre de fois où le
+00:00:22.455 --> 00:00:25.038
+Ensuite, compter ce que coûte chaque ligne.
 
 9
-00:00:31.708 --> 00:00:36.504
-test de la ligne cinq est évalué pendant le passage j. Chaque test vrai provoque un
+00:00:25.038 --> 00:00:27.561
+Enfin, étudier le meilleur et le pire cas.
 
 10
-00:00:36.504 --> 00:00:41.358
-décalage. Le dernier test, lui, est faux, et fait sortir de la boucle. Donc il y a t
+00:00:27.911 --> 00:00:29.109
+Commençons par l'idée.
 
 11
-00:00:41.358 --> 00:00:44.536
-j moins un décalages, et t j est compris entre un et j.
+00:00:29.109 --> 00:00:31.396
+Tu as déjà rangé des cartes dans ta main ?
 
 12
-00:00:45.236 --> 00:00:49.864
-On fait maintenant le tableau, ligne par ligne. La ligne un, le test de la boucle
+00:00:31.396 --> 00:00:33.193
+La partie gauche est déjà rangée.
 
 13
-00:00:49.864 --> 00:00:54.434
-pour, s'exécute n fois : n moins un tests vrais, plus le dernier test, faux, qui
+00:00:33.193 --> 00:00:37.767
+Tu prends une nouvelle carte, et tu la fais glisser vers la gauche jusqu'à sa place.
 
 14
-00:00:54.434 --> 00:00:59.062
-fait sortir. Les lignes deux, quatre et huit s'exécutent une fois par passage : n
+00:00:38.117 --> 00:00:39.827
+Prenons le tableau de l'annale :
 
 15
-00:00:59.062 --> 00:01:00.319
-moins un fois chacune.
+00:00:39.827 --> 00:00:41.056
+trois, huit, deux, six.
 
 16
-00:01:01.019 --> 00:01:05.895
-La ligne cinq s'exécute somme des t j fois. Les lignes six et sept s'exécutent une
+00:00:41.056 --> 00:00:44.849
+Au départ, que dire de la première case, toute seule ? Elle est triée :
 
 17
-00:01:05.895 --> 00:01:10.534
-fois par test vrai : somme des t j moins un, chacune. Et la ligne trois est un
+00:00:44.849 --> 00:00:46.719
+un seul élément est toujours rangé.
 
 18
-00:01:10.534 --> 00:01:12.496
-commentaire : elle ne coûte rien.
+00:00:46.719 --> 00:00:50.192
+C'est pour ça que la boucle commence à j égale deux, et pas à un.
 
 19
-00:01:13.196 --> 00:01:18.147
-Chaque instruction simple coûte c. On additionne tout. Comme la somme des t j moins
+00:00:50.542 --> 00:00:54.617
+Passage j égale deux. La clé, c'est T de deux : le huit. On la met de côté.
 
 20
-00:01:18.147 --> 00:01:23.158
-un vaut la somme des t j, moins n moins un, la formule se simplifie : T de n égale c
+00:00:54.967 --> 00:00:56.909
+On la compare à la case de gauche.
 
 21
-00:01:23.158 --> 00:01:26.081
-fois, trois somme des t j, plus deux n, moins un.
+00:00:56.909 --> 00:00:59.136
+Trois est-il plus grand que huit ? Non.
 
 22
-00:01:26.781 --> 00:01:31.468
-Vérifions sur le tableau de l'annale : trois, huit, deux, six. Les t j valent un,
+00:00:59.136 --> 00:01:01.364
+Le test est faux dès la première fois :
 
 23
-00:01:31.468 --> 00:01:36.329
-trois et deux. Leur somme fait six. Donc T de quatre égale c fois dix-huit plus sept
+00:01:01.364 --> 00:01:03.820
+le huit retourne à sa place, rien ne bouge.
 
 24
-00:01:36.329 --> 00:01:39.453
-: vingt-cinq c. C'est aussi ce que compte l'animateur.
+00:01:04.170 --> 00:01:09.277
+Retiens ce chiffre : pour j égale deux, le test du tant que a été fait une seule fois.
 
 25
-00:01:40.153 --> 00:01:44.816
-Le meilleur cas. Le test est toujours évalué au moins une fois, donc chaque t j vaut
+00:01:09.277 --> 00:01:10.702
+On note t deux égale un.
 
 26
-00:01:44.816 --> 00:01:49.313
-au moins un. Il vaut exactement un quand la clé est déjà à sa place, c'est-à-dire
+00:01:10.702 --> 00:01:13.493
+Ces nombres t j sont le cœur de tout le calcul.
 
 27
-00:01:49.313 --> 00:01:53.753
-quand le tableau est trié. Alors la somme des t j vaut n moins un, et T min de n
+00:01:13.843 --> 00:01:16.242
+Passage j égale trois. La clé est le deux.
 
 28
-00:01:53.753 --> 00:01:56.473
-égale c fois cinq n moins quatre. C'est linéaire.
+00:01:16.242 --> 00:01:18.813
+On la sort du tableau, ce qui libère sa case.
 
 29
-00:01:57.173 --> 00:02:01.719
-Le pire cas. L'indice i descend au plus de j moins un jusqu'à zéro : t j vaut au
+00:01:19.163 --> 00:01:20.644
+Premier test : i vaut deux.
 
 30
-00:02:01.719 --> 00:02:06.377
-plus j. Sur un tableau trié à l'envers, chaque clé est plus petite que tout ce qui
+00:01:20.644 --> 00:01:22.728
+Huit est-il plus grand que deux ? Oui.
 
 31
-00:02:06.377 --> 00:02:11.036
-la précède, elle remonte jusqu'au début, et t j égale j. La somme des j, de deux à
+00:01:22.728 --> 00:01:26.566
+Alors on décale le huit d'une case vers la droite, dans la case libre.
 
 32
-00:02:11.036 --> 00:02:13.536
-n, vaut n fois n plus un sur deux, moins un.
+00:01:26.916 --> 00:01:28.321
+Deuxième test : i vaut un.
 
 33
-00:02:14.236 --> 00:02:19.350
-On remplace dans la formule. T max de n égale c fois, trois n carré sur deux, plus
+00:01:28.321 --> 00:01:31.887
+Trois est-il plus grand que deux ? Oui encore. On décale le trois.
 
 34
-00:02:19.350 --> 00:02:24.090
-sept n sur deux, moins quatre. Le terme dominant est en n carré : le tri par
+00:01:32.237 --> 00:01:33.995
+Troisième test : i vaut zéro.
 
 35
-00:02:24.090 --> 00:02:26.460
-insertion est quadratique au pire cas.
+00:01:33.995 --> 00:01:35.754
+On est arrivé au bord gauche.
 
 36
-00:02:27.160 --> 00:02:31.697
-À retenir : linéaire sur un tableau trié, quadratique au pire cas, et quadratique
+00:01:35.754 --> 00:01:39.149
+La condition i supérieur à zéro est fausse, on s'arrête.
 
 37
-00:02:31.697 --> 00:02:36.178
-aussi en moyenne, à peu près la moitié du pire. Maintenant, fais-le tourner dans
+00:01:39.149 --> 00:01:41.272
+Voilà à quoi sert cette condition :
 
 38
-00:02:36.178 --> 00:02:38.979
-l'animateur, puis code-le toi-même dans l'atelier.
+00:01:41.272 --> 00:01:43.394
+sans elle, on sortirait du tableau.
+
+39
+00:01:43.744 --> 00:01:47.565
+La case libre est la case un : on y pose la clé. Bilan du passage :
+
+40
+00:01:47.565 --> 00:01:49.333
+trois tests, et deux décalages.
+
+41
+00:01:49.683 --> 00:01:53.338
+Remarque bien ça : trois tests, mais seulement deux décalages.
+
+42
+00:01:53.338 --> 00:01:58.171
+Le dernier test est toujours celui qui échoue, celui qui fait sortir de la boucle.
+
+43
+00:01:58.171 --> 00:02:01.118
+Donc, au passage j, il y a t j moins un décalages.
+
+44
+00:02:01.468 --> 00:02:04.318
+Dernier passage, j égale quatre, avec la clé six.
+
+45
+00:02:04.318 --> 00:02:07.342
+Huit est-il plus grand que six ? Oui : on le décale.
+
+46
+00:02:07.342 --> 00:02:09.611
+Trois est-il plus grand que six ? Non :
+
+47
+00:02:09.611 --> 00:02:12.519
+on s'arrête, et on pose le six dans la case libre.
+
+48
+00:02:12.869 --> 00:02:15.431
+Le tableau est trié : deux, trois, six, huit.
+
+49
+00:02:15.431 --> 00:02:19.589
+Et on a relevé t deux égale un, t trois égale trois, t quatre égale deux.
+
+50
+00:02:19.939 --> 00:02:21.391
+Maintenant, la question clé :
+
+51
+00:02:21.391 --> 00:02:23.145
+pourquoi a-t-on besoin de ces t j ?
+
+52
+00:02:23.145 --> 00:02:25.549
+Parce que le nombre de tests dépend des données.
+
+53
+00:02:25.899 --> 00:02:29.354
+Sur un tableau déjà trié, chaque clé est déjà à sa place :
+
+54
+00:02:29.354 --> 00:02:30.843
+un seul test par passage.
+
+55
+00:02:30.843 --> 00:02:36.502
+Sur un tableau trié à l'envers, chaque clé doit remonter jusqu'au début : j tests au passage j.
+
+56
+00:02:36.852 --> 00:02:41.514
+On ne peut donc pas écrire un seul nombre valable pour toutes les entrées de taille n.
+
+57
+00:02:41.514 --> 00:02:45.417
+L'astuce, c'est de donner un nom à ce qu'on ne connaît pas encore : t j.
+
+58
+00:02:45.417 --> 00:02:49.375
+On fait tout le calcul avec ce nom, et on remplace à la fin, cas par cas.
+
+59
+00:02:49.725 --> 00:02:51.293
+Et on sait déjà l'encadrer.
+
+60
+00:02:51.293 --> 00:02:54.836
+Au moins un test, puisque le test est toujours fait une fois.
+
+61
+00:02:54.836 --> 00:02:59.367
+Au plus j tests, puisque i part de j moins un et descend au pire jusqu'à zéro.
+
+62
+00:02:59.717 --> 00:03:05.072
+Passons au comptage. On reprend le pseudo-code, et pour chaque ligne, on se pose une seule question :
+
+63
+00:03:05.072 --> 00:03:06.928
+combien de fois est-elle exécutée ?
+
+64
+00:03:07.278 --> 00:03:10.601
+Commence par la ligne un, la boucle pour j égale deux à n.
+
+65
+00:03:10.601 --> 00:03:12.606
+Combien de fois est-elle exécutée ?
+
+66
+00:03:12.606 --> 00:03:14.382
+Réfléchis avant que je réponde.
+
+67
+00:03:21.932 --> 00:03:27.197
+Beaucoup d'étudiants répondent n moins un, parce que j prend n moins un valeurs, de deux à n.
+
+68
+00:03:27.197 --> 00:03:30.084
+Mais regarde ce que fait vraiment une boucle pour :
+
+69
+00:03:30.084 --> 00:03:33.537
+avant chaque tour, elle teste si j est inférieur ou égal à n.
+
+70
+00:03:33.887 --> 00:03:36.345
+Puis j vaut n plus un. Le test est faux :
+
+71
+00:03:36.345 --> 00:03:38.684
+c'est lui qui fait sortir de la boucle.
+
+72
+00:03:38.684 --> 00:03:40.842
+Et ce test compte aussi ! Total : n.
+
+73
+00:03:41.192 --> 00:03:44.890
+Les lignes deux, quatre et huit sont dans le corps de la boucle pour,
+
+74
+00:03:44.890 --> 00:03:46.390
+mais en dehors du tant que :
+
+75
+00:03:46.390 --> 00:03:50.088
+elles s'exécutent une fois par passage, donc n moins un fois chacune.
+
+76
+00:03:50.438 --> 00:03:52.171
+La ligne trois est un commentaire :
+
+77
+00:03:52.171 --> 00:03:56.923
+elle annonce ce que font les lignes suivantes, ce n'est pas une instruction. Elle ne coûte rien.
+
+78
+00:03:57.273 --> 00:03:59.683
+La ligne cinq, c'est le test du tant que.
+
+79
+00:03:59.683 --> 00:04:02.679
+Au passage j, il est fait t j fois, par définition.
+
+80
+00:04:02.679 --> 00:04:07.087
+Sur tous les passages, ça fait la somme des t j, pour j allant de deux à n.
+
+81
+00:04:07.437 --> 00:04:09.067
+Et les lignes six et sept ?
+
+82
+00:04:09.067 --> 00:04:11.723
+Elles sont exécutées une fois par test vrai.
+
+83
+00:04:11.723 --> 00:04:14.621
+Or, sur les t j tests, seul le dernier est faux.
+
+84
+00:04:14.621 --> 00:04:19.149
+Donc t j moins un fois par passage, et au total, la somme des t j moins un.
+
+85
+00:04:19.499 --> 00:04:20.803
+Le tableau est complet.
+
+86
+00:04:20.803 --> 00:04:23.694
+C'est lui que le correcteur veut voir sur ta copie,
+
+87
+00:04:23.694 --> 00:04:26.473
+avec la justification des deux lignes délicates :
+
+88
+00:04:26.473 --> 00:04:27.947
+la un, et les six et sept.
+
+89
+00:04:28.297 --> 00:04:32.402
+Chaque instruction simple coûte la même constante c, nous dit l'énoncé.
+
+90
+00:04:32.402 --> 00:04:36.275
+On additionne donc les nombres d'exécutions, et on multiplie par c.
+
+91
+00:04:36.625 --> 00:04:38.583
+D'où vient le trois fois n moins un ?
+
+92
+00:04:38.583 --> 00:04:40.277
+Des lignes deux, quatre et huit.
+
+93
+00:04:40.277 --> 00:04:42.235
+Et le deux devant la dernière somme ?
+
+94
+00:04:42.235 --> 00:04:43.452
+Des lignes six et sept.
+
+95
+00:04:43.802 --> 00:04:45.890
+Pour simplifier, une seule remarque.
+
+96
+00:04:45.890 --> 00:04:50.124
+La somme des t j moins un, c'est la somme des t j, moins la somme des un.
+
+97
+00:04:50.124 --> 00:04:53.257
+Et combien y a-t-il de termes quand j va de deux à n ?
+
+98
+00:04:53.257 --> 00:04:54.533
+Exactement n moins un.
+
+99
+00:04:54.883 --> 00:04:56.522
+On remplace, et on regroupe.
+
+100
+00:04:56.522 --> 00:04:59.977
+n, plus trois fois n moins un, moins deux fois n moins un :
+
+101
+00:04:59.977 --> 00:05:02.846
+il reste n plus n moins un, soit deux n moins un.
+
+102
+00:05:02.846 --> 00:05:05.656
+Et devant la somme des t j, un plus deux, trois.
+
+103
+00:05:06.006 --> 00:05:07.574
+Vérifions sur notre exemple :
+
+104
+00:05:07.574 --> 00:05:09.141
+c'est une habitude à prendre.
+
+105
+00:05:09.141 --> 00:05:12.872
+n vaut quatre, et la somme des t j vaut un plus trois plus deux, six.
+
+106
+00:05:12.872 --> 00:05:14.277
+Trois fois six, dix-huit ;
+
+107
+00:05:14.277 --> 00:05:16.440
+plus huit moins un, sept : vingt-cinq c.
+
+108
+00:05:16.440 --> 00:05:21.089
+L'animateur du site, qui compte les instructions une par une, trouve aussi vingt-cinq.
+
+109
+00:05:21.439 --> 00:05:23.122
+Il reste à remplacer les t j.
+
+110
+00:05:23.122 --> 00:05:24.515
+D'abord le meilleur cas.
+
+111
+00:05:24.515 --> 00:05:26.315
+Le coût augmente avec les t j :
+
+112
+00:05:26.315 --> 00:05:31.017
+le meilleur cas, c'est quand chaque t j est le plus petit possible, t j égale un.
+
+113
+00:05:31.367 --> 00:05:32.827
+Quand est-ce que ça arrive ?
+
+114
+00:05:32.827 --> 00:05:35.330
+Quand le premier test est faux à chaque passage,
+
+115
+00:05:35.330 --> 00:05:39.136
+c'est-à-dire quand la case de gauche n'est jamais plus grande que la clé.
+
+116
+00:05:39.136 --> 00:05:41.117
+C'est exactement un tableau déjà trié.
+
+117
+00:05:41.467 --> 00:05:46.199
+Alors la somme des t j, c'est n moins un fois un : n moins un. On remplace :
+
+118
+00:05:46.199 --> 00:05:48.939
+trois fois n moins un, plus deux n moins un.
+
+119
+00:05:48.939 --> 00:05:50.683
+Ça fait cinq n moins quatre.
+
+120
+00:05:51.033 --> 00:05:54.210
+Cinq n moins quatre est une fonction affine de n.
+
+121
+00:05:54.210 --> 00:05:56.804
+Si n double, le coût double, à peu près.
+
+122
+00:05:56.804 --> 00:06:00.889
+On dit que le coût est linéaire, et on écrira grand thêta de n.
+
+123
+00:06:01.239 --> 00:06:02.643
+Le pire cas, maintenant :
+
+124
+00:06:02.643 --> 00:06:05.284
+chaque t j le plus grand possible, t j égale j.
+
+125
+00:06:05.284 --> 00:06:08.150
+Il faut que chaque clé remonte jusqu'au tout début,
+
+126
+00:06:08.150 --> 00:06:10.903
+en étant comparée à tous les éléments avant elle.
+
+127
+00:06:11.253 --> 00:06:15.257
+Ça arrive quand chaque clé est plus petite que tout ce qui la précède :
+
+128
+00:06:15.257 --> 00:06:16.779
+le tableau trié à l'envers.
+
+129
+00:06:16.779 --> 00:06:18.358
+Regarde le dernier passage :
+
+130
+00:06:18.358 --> 00:06:21.517
+le un doit passer devant le quatre, le trois et le deux.
+
+131
+00:06:21.517 --> 00:06:23.434
+Quatre tests, pour j égale quatre.
+
+132
+00:06:23.784 --> 00:06:27.671
+Il faut alors calculer la somme des j, pour j allant de deux à n.
+
+133
+00:06:27.671 --> 00:06:29.405
+C'est le seul calcul délicat.
+
+134
+00:06:29.405 --> 00:06:31.259
+On connaît la somme de un à n :
+
+135
+00:06:31.259 --> 00:06:32.873
+n fois n plus un, sur deux.
+
+136
+00:06:32.873 --> 00:06:35.923
+Il manque juste le terme j égale un : on le retire.
+
+137
+00:06:36.273 --> 00:06:39.030
+Attention au piège : beaucoup oublient ce moins un.
+
+138
+00:06:39.030 --> 00:06:42.707
+Il ne change pas l'ordre de grandeur, mais le résultat devient faux,
+
+139
+00:06:42.707 --> 00:06:44.059
+et le correcteur le voit.
+
+140
+00:06:44.409 --> 00:06:46.914
+On remplace dans la formule, et on développe :
+
+141
+00:06:46.914 --> 00:06:50.127
+trois n carré sur deux, plus sept n sur deux, moins quatre.
+
+142
+00:06:50.477 --> 00:06:52.685
+Le terme qui domine, c'est n carré.
+
+143
+00:06:52.685 --> 00:06:56.344
+Si n double, le coût est multiplié par quatre, à peu près.
+
+144
+00:06:56.344 --> 00:06:57.922
+Le coût est quadratique :
+
+145
+00:06:57.922 --> 00:06:59.373
+grand thêta de n carré.
+
+146
+00:06:59.723 --> 00:07:05.568
+Pour sentir la différence, prenons mille éléments. Déjà triés : environ cinq mille c. Triés à l'envers :
+
+147
+00:07:05.568 --> 00:07:07.367
+environ un million et demi de c.
+
+148
+00:07:07.367 --> 00:07:10.009
+Le même algorithme, trois cents fois plus lent,
+
+149
+00:07:10.009 --> 00:07:12.651
+selon l'ordre dans lequel arrivent les données.
+
+150
+00:07:13.001 --> 00:07:18.422
+Récapitulons la méthode, parce que c'est elle que tu réutiliseras pour n'importe quel algorithme. Un :
+
+151
+00:07:18.422 --> 00:07:21.238
+nommer ce qui dépend des données, ici les t j. Deux :
+
+152
+00:07:21.238 --> 00:07:23.736
+compter les exécutions de chaque ligne. Trois :
+
+153
+00:07:23.736 --> 00:07:25.596
+additionner et simplifier. Quatre :
+
+154
+00:07:25.596 --> 00:07:28.147
+remplacer, dans le meilleur et dans le pire cas.
+
+155
+00:07:28.497 --> 00:07:32.941
+À toi, maintenant : fais tourner l'animateur du site sur tes propres tableaux,
+
+156
+00:07:32.941 --> 00:07:34.763
+puis code le tri dans l'atelier.
+
+157
+00:07:34.763 --> 00:07:39.207
+La mesure te montrera la droite et la parabole, obtenues avec ton propre code.

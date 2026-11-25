@@ -73,7 +73,15 @@ On élimine la moitié du tableau d'un seul coup. On garde une zone de recherche
 ], "la recherche dichotomique") + r"""
 
 <p>Sur le même tableau de 10 cases, pour \(x = 40\) absent : 10 comparaisons d'un côté, 4 de l'autre. L'écart paraît modeste.
-Il devient vertigineux quand \(n\) grandit :</p>
+Refaisons le calcul pour un tableau d'un million de cases, pas à pas.</p>
+<ul>
+<li><strong>Recherche séquentielle.</strong> Si \(x\) est absent, il faut regarder chaque case : \(10^6\) comparaisons.</li>
+<li><strong>Dichotomie.</strong> Chaque tour divise la zone par deux. Combien de fois peut-on diviser \(10^6\) par deux avant de descendre sous une case ?
+On cherche la puissance de 2 qui encadre \(10^6\) : \(2^{19} = 524\,288 \le 10^6 < 2^{20} = 1\,048\,576\). Après 19 divisions il reste au plus
+une case, et un dernier tour l'examine : \(19 + 1 = 20\) comparaisons (on le démontre dans la partie Démontrer).</li>
+<li><strong>En temps.</strong> À une microseconde la comparaison : \(10^6 \times 1\ \mu s = 1\) s pour la première, \(20\ \mu s\) pour la seconde.</li>
+</ul>
+<p>Le même calcul, pour d'autres tailles :</p>
 """ + tableau(["Taille \\(n\\)", "Séquentielle (pire cas)", "Dichotomique (pire cas)", "Temps à 1 µs la comparaison"], [
     ["\\(10\\)", "10", "4", "10 µs contre 4 µs"],
     ["\\(1\\,000\\)", "1 000", "10", "1 ms contre 10 µs"],
@@ -120,10 +128,15 @@ ici, on retient l'argument.</p>
 """ + retenir("Ce qu'il faut retenir de l'écart", r"""<p>Recherche séquentielle : coût qui grandit comme \(n\). Recherche dichotomique : coût qui grandit comme \(\log_2 n\).
 On écrira plus tard \(\Theta(n)\) et \(\Theta(\log n)\) (module 2). Doubler \(n\) double le premier, et n'ajoute qu'une comparaison au second.</p>""") + r"""
 <h3>Mais rien n'est gratuit</h3>
-<p>La dichotomie exige un tableau <strong>trié</strong>. Trier coûte (au mieux de l'ordre de \(n \log n\) comparaisons, module 4).
-Le bon choix dépend donc de l'usage :</p>
-<ul><li>une seule recherche dans des données en vrac : la recherche séquentielle (\(n\) comparaisons) bat « trier puis chercher » ;</li>
-<li>beaucoup de recherches dans les mêmes données : on trie une fois, et chaque recherche ne coûte plus que \(\log_2 n\).</li></ul>
+<p>La dichotomie exige un tableau <strong>trié</strong>, et trier coûte cher : au mieux de l'ordre de \(n \log_2 n\) comparaisons (module 4).
+Faisons le compte pour \(n = 10^6\) données en vrac, avec \(\log_2 10^6 \approx 20\) :</p>
+<ul>
+<li><strong>Une seule recherche.</strong> Séquentielle : \(10^6\) comparaisons. Trier puis chercher : \(10^6 \times 20 + 20 \approx 2 \times 10^7\).
+Trier coûte vingt fois plus cher que de tout regarder : on ne trie pas.</li>
+<li><strong>Cent recherches.</strong> Séquentielle : \(100 \times 10^6 = 10^8\). Trier une fois puis cent dichotomies : \(2 \times 10^7 + 100 \times 20 \approx 2 \times 10^7\).
+Cette fois, trier est cinq fois moins cher, parce que son coût est payé une seule fois.</li>
+</ul>
+<p>Le bon choix dépend donc du nombre de recherches. L'exercice 3 calcule le point de bascule exact : 21 recherches.</p>
 """ + master(r"""<p>Ce même partage « trier une fois, chercher vite ensuite » est au cœur de l'attaque <em>pas de bébé, pas de géant</em>
 contre le logarithme discret (étape 7.3) : on range \(\sqrt q\) valeurs dans une table triée, puis chaque recherche coûte \(\log q\).
 C'est ce qui fait tomber le coût d'une attaque sur Diffie-Hellman de \(q\) à environ \(\sqrt q\) opérations.</p>""")
@@ -285,7 +298,15 @@ la taille de l'entrée de l'attaquant, c'est \(b\) bits, et son travail est \(2^
 Dix bits de plus multiplient le temps par \(2^{10} = 1024 \approx 1000\).</p>""") + r"""
 
 <h3>Les ordres de grandeur</h3>
-<p>Temps <strong>moyen</strong> d'une recherche exhaustive (la moitié des clés), selon la vitesse de l'attaquant :</p>
+<p>Calculons une case en entier : une clé DES de 56 bits, attaquée par une grappe qui teste \(10^{12}\) clés par seconde.</p>
+<ol>
+<li><strong>Nombre de clés</strong> : \(2^{56} \approx 7{,}2 \times 10^{16}\).</li>
+<li><strong>Essais en moyenne</strong> : la moitié, \(2^{55} \approx 3{,}6 \times 10^{16}\) (on le démontre dans la partie Démontrer).</li>
+<li><strong>Temps en secondes</strong> : \(3{,}6 \times 10^{16} / 10^{12} = 3{,}6 \times 10^{4}\) s.</li>
+<li><strong>Conversion</strong> : \(3{,}6 \times 10^4 / 3600 = 10\) heures.</li>
+</ol>
+<p>Pour les autres cases, seul change le nombre de bits : chaque bit en plus double le temps. De 56 à 64 bits, c'est \(2^8 = 256\) fois plus long :
+10 heures deviennent environ 107 jours. Le tableau complet, en temps <strong>moyen</strong> :</p>
 """ + tableau(["Taille de clé", "Nombre de clés", "à \\(10^9\\) clés/s (un PC)", "à \\(10^{12}\\) clés/s (une grappe)", "à \\(10^{18}\\) clés/s (un supercalculateur)"], [
     ["40 bits", "\\(1{,}1 \\times 10^{12}\\)", "9 min", "0,55 s", "0,55 µs"],
     ["56 bits (DES)", "\\(7{,}2 \\times 10^{16}\\)", "1,1 an", "10 h", "0,04 s"],

@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 outils/video/modeles/
 .DS_Store
+outils/video/node_modules/

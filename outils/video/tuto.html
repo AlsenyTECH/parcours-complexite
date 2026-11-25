@@ -1,0 +1,242 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+<script src="node_modules/katex/dist/katex.min.js"></script>
+<style>
+/* Tableau animé des tutos du Parcours Complexité.
+   Rendu déterministe : rendre(t) dessine l'image à l'instant t à partir de la liste d'actions. */
+@font-face{font-family:Caveat;font-weight:500;src:url(polices/caveat-latin-500-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(polices/caveat-latin-700-normal.woff2)}
+@font-face{font-family:Kalam;font-weight:400;src:url(polices/kalam-latin-400-normal.woff2)}
+*{box-sizing:border-box}
+html,body{margin:0;width:1280px;height:720px;overflow:hidden}
+body{background:#fbfcfe;font-family:Caveat,'DejaVu Sans',sans-serif;color:#1c3bb0;
+  background-image:linear-gradient(#e3e9f4 1px,transparent 1px),linear-gradient(90deg,#e3e9f4 1px,transparent 1px);background-size:32px 32px}
+#marge{position:absolute;left:64px;top:0;bottom:0;width:2px;background:#eab0b4}
+#signature{position:absolute;right:28px;top:14px;font-size:26px;color:#8a94ad;font-weight:500}
+#section{position:absolute;left:84px;top:14px;font-family:Kalam,sans-serif;font-size:22px;color:#0a7441;background:#e9f5ee;border-radius:4px;padding:2px 12px}
+#scene{position:absolute;inset:0}
+.o{position:absolute}
+.ec{white-space:pre;font-weight:500;line-height:1.15}
+.ec sub{font-size:.62em;vertical-align:-.25em;line-height:0}
+.ec sup{font-size:.62em;vertical-align:.7em;line-height:0}
+.bleu{color:#1c3bb0}.rouge{color:#bd1f2b}.vert{color:#0a7441}.gris{color:#7a849c}.noir{color:#1b2233}.orange{color:#b15c00}
+.gras{font-weight:700}
+.plume{display:inline-block;width:11px;height:11px;border-radius:50%;background:currentColor;margin-left:4px;vertical-align:.25em}
+.fo{font-size:34px;color:#1b2233}
+.fo.bleu .katex{color:#1c3bb0}.fo.rouge .katex{color:#bd1f2b}.fo.vert .katex{color:#0a7441}
+.cases{display:flex}
+.case{position:relative;display:flex;flex-direction:column;align-items:center}
+.case .v{display:flex;align-items:center;justify-content:center;border:3px solid #9aa6c2;border-radius:6px;background:#fff;
+  font-weight:700;color:#1b2233}
+.case .i{font-size:22px;color:#7a849c;margin-top:2px;font-family:Kalam,sans-serif}
+.case.trie .v{border-color:#0a7441;background:#e6f4ec}
+.case.actif .v{border-color:#b15c00;background:#fff1de}
+.case.cle .v{border-color:#bd1f2b;background:#fde9ea;color:#bd1f2b}
+.case.vide .v{border-style:dashed;color:transparent;background:transparent}
+.case.elimine .v{opacity:.3;border-style:dashed}
+.case .flash{position:absolute;inset:0;border-radius:6px;background:#ffd76a}
+.mq{position:absolute;left:50%;transform:translateX(-50%);font-family:Kalam,sans-serif;font-weight:700;font-size:24px;color:#fff;border-radius:5px;padding:0 9px;line-height:1.35;white-space:nowrap}
+.fantome{position:absolute;display:flex;align-items:center;justify-content:center;font-weight:700;color:#bd1f2b;border:3px solid #bd1f2b;border-radius:6px;background:#fde9ea;box-shadow:0 6px 14px rgba(0,0,0,.15)}
+.boite{border:3px solid #bd1f2b;border-radius:8px;background:#fff;display:flex;flex-direction:column;align-items:center;padding:4px 14px 8px}
+.boite .l{font-size:26px;color:#bd1f2b;font-weight:700}
+.boite .v{font-size:44px;font-weight:700;color:#bd1f2b;min-width:50px;text-align:center;min-height:52px}
+.code{background:#fff;border:2px solid #c9d2e6;border-radius:8px;padding:6px 0;font-family:'DejaVu Sans Mono',monospace;color:#1b2233}
+.code .r{display:flex;align-items:center;padding:1px 14px;white-space:pre}
+.code .r .n{color:#8a94ad;width:1.7em}
+.code .r .c{flex:1}
+.code .r .k{width:4.6em;text-align:right;font-family:Caveat,sans-serif;font-weight:700;color:#1c3bb0;font-size:1.35em}
+.code .r.hl{background:#fff1de;box-shadow:inset 4px 0 0 #b15c00}
+.code .r.com .c{color:#8a94ad;font-style:italic}
+.tab{border-collapse:collapse;background:#fff;font-size:28px}
+.tab th,.tab td{border:2px solid #c9d2e6;padding:3px 12px;text-align:center;white-space:nowrap}
+.tab th{background:#eef2fa;color:#1b2233;font-family:Kalam,sans-serif;font-weight:400;font-size:24px}
+.tab td{color:#1c3bb0;font-weight:700}
+.tab td .katex{font-size:.95em}
+.cpt{border:3px solid #1c3bb0;border-radius:8px;background:#fff;padding:2px 14px;font-size:30px;font-weight:700;white-space:nowrap}
+.cpt b{font-size:38px}
+.cpt .fl{position:absolute;inset:0;border-radius:6px;background:#ffd76a}
+#pause{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:760px;background:#1b2233;color:#fff;border-radius:14px;padding:26px 34px;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);font-family:Kalam,sans-serif;font-size:30px;line-height:1.35;display:none}
+#pause .t{font-family:Caveat,sans-serif;font-size:46px;font-weight:700;color:#ffd76a;margin-bottom:6px}
+#pause .barre{height:8px;border-radius:4px;background:#3a455e;margin-top:16px;overflow:hidden}
+#pause .barre i{display:block;height:100%;background:#ffd76a}
+svg#traits{position:absolute;inset:0;width:1280px;height:720px;pointer-events:none;overflow:visible}
+</style></head><body>
+<div id="marge"></div><div id="signature">Parcours Complexité · MathNexus</div><div id="section"></div>
+<div id="scene"></div>
+<svg id="traits"></svg>
+<div id="pause"><div class="t"></div><div class="m"></div><div class="barre"><i></i></div></div>
+<script>
+let PLAN = null;
+const KCACHE = new Map();
+function tex(s, display){ const k = (display?'D':'I') + s; if (!KCACHE.has(k)) KCACHE.set(k, katex.renderToString(s, {displayMode: !!display, throwOnError: false})); return KCACHE.get(k); }
+function charger(plan){ PLAN = plan; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function deco(s){ // indices et exposants manuscrits : ₀…₉, ⱼ, ², ³ ; $...$ → formule
+  return esc(s).replace(/[₀₁₂₃₄₅₆₇₈₉]/g, c => '<sub>'+'₀₁₂₃₄₅₆₇₈₉'.indexOf(c)+'</sub>').replace(/ⱼ/g,'<sub>j</sub>');
+}
+function cl(p){ return Math.max(0, Math.min(1, p)); }
+function lisse(p){ return p<.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2; }
+
+function rendre(t){
+  const scene = document.getElementById('scene'), svg = document.getElementById('traits');
+  scene.innerHTML = ''; svg.innerHTML = '';
+  const O = {};           // objets vivants : id -> {type, el, data}
+  let section = '', pauseOn = null;
+  for (const b of PLAN.beats){ if (b.debut <= t) section = b.section || section; }
+  document.getElementById('section').textContent = section;
+  document.getElementById('section').style.display = section ? '' : 'none';
+
+  for (const a of PLAN.actions){
+    if (a.debut > t) break;
+    const p = a.duree > 0 ? cl((t - a.debut) / a.duree) : 1;
+    appliquer(a, p, O, scene, svg, t);
+    if (a.type === 'pause' && t < a.debut + a.duree) pauseOn = {a, p};
+  }
+  // dessin final des cases (après toutes les modifications)
+  for (const id in O) if (O[id].type === 'boite') O[id].el.querySelector('.v').textContent = O[id].v;
+  for (const id in O) if (O[id].type === 'cases') dessinerCases(O[id]);
+  const pz = document.getElementById('pause');
+  if (pauseOn){ pz.style.display = 'block'; pz.querySelector('.t').textContent = pauseOn.a.titre || 'À toi !';
+    pz.querySelector('.m').innerHTML = deco(pauseOn.a.texte); pz.querySelector('.barre i').style.width = (100*(1-pauseOn.p))+'%'; }
+  else pz.style.display = 'none';
+}
+
+function place(el, a){ el.style.left = a.x + 'px'; el.style.top = a.y + 'px'; }
+
+function appliquer(a, p, O, scene, svg, t){
+  const o = O[a.id];
+  switch (a.type){
+    case 'ecrire': {
+      const el = document.createElement('div'); el.className = 'o ec ' + (a.couleur || 'bleu') + (a.gras ? ' gras' : '');
+      el.style.fontSize = (a.taille || 44) + 'px'; place(el, a);
+      const n = Math.floor(lisse(p) * a.texte.length);
+      el.innerHTML = deco(a.texte.slice(0, n)) + (p < 1 ? '<span class="plume"></span>' : '');
+      if (a.souligne && p >= 1) el.style.textDecoration = 'underline', el.style.textDecorationThickness = '3px', el.style.textUnderlineOffset = '6px';
+      scene.appendChild(el); O[a.id] = {type:'ecrire', el}; break; }
+    case 'formule': {
+      const el = document.createElement('div'); el.className = 'o fo ' + (a.couleur || ''); place(el, a);
+      el.style.fontSize = (a.taille || 34) + 'px'; el.innerHTML = tex(a.tex, false);
+      if (a.cadre){ const c = {rouge:'#bd1f2b', vert:'#0a7441', bleu:'#1c3bb0', orange:'#b15c00'}[a.cadre];
+        el.style.padding = '4px 16px'; el.style.borderRadius = '8px';
+        el.style.boxShadow = p >= 1 ? '0 0 0 3px ' + c : 'none'; el.style.background = p >= 1 ? '#fff' : 'transparent'; }
+      el.style.clipPath = 'inset(-20px ' + (100 - 100 * lisse(p)) + '% -20px -10px)';
+      scene.appendChild(el); O[a.id] = {type:'formule', el}; break; }
+    case 'cases': {
+      const el = document.createElement('div'); el.className = 'o cases'; place(el, a); el.style.opacity = lisse(p);
+      scene.appendChild(el);
+      O[a.id] = {type:'cases', el, a, vals: a.valeurs.slice(), etats: a.valeurs.map(()=>''), marques: {}, flash: {}, fantomes: [], s: a.taille || 76, g: a.ecart || 12};
+      break; }
+    case 'valeur': { if (!o) break; o.vals[a.i - 1] = a.v; if (p < 1) o.flash[a.i] = 1 - p; break; }
+    case 'etat': { if (!o) break; for (const i of a.i) o.etats[i - 1] = a.style; break; }
+    case 'marque': { if (!o) break; if (a.i == null) delete o.marques[a.texte]; else o.marques[a.texte] = {i: a.i, c: a.couleur || '#1c3bb0', rang: a.rang || 0}; break; }
+    case 'glisse': { // T[vers] = T[de] : une copie de la valeur vole de de à vers
+      if (!o) break;
+      if (p < 1) o.fantomes.push({de: a.de, vers: a.vers, v: o.vals[a.de - 1], p: lisse(p)});
+      else o.vals[a.vers - 1] = o.vals[a.de - 1];
+      break; }
+    case 'boite': {
+      const el = document.createElement('div'); el.className = 'o boite'; place(el, a); el.style.opacity = lisse(p);
+      el.innerHTML = '<div class="l">' + deco(a.label) + '</div><div class="v"></div>'; scene.appendChild(el);
+      O[a.id] = {type:'boite', el, v: a.valeur == null ? '' : a.valeur}; break; }
+    case 'extrait': { // valeur d'une case -> boîte ; la case devient vide
+      const c = O[a.cases], bx = O[a.boite]; if (!c || !bx) break;
+      const v = c.vals[a.i - 1];
+      if (p < 1){ c.fantomes.push({de: a.i, versXY: centreBoite(bx), v, p: lisse(p)}); c.etats[a.i - 1] = 'vide'; }
+      else { bx.v = v; c.vals[a.i - 1] = ''; c.etats[a.i - 1] = 'vide'; }
+      break; }
+    case 'depose': { // boîte -> case
+      const c = O[a.cases], bx = O[a.boite]; if (!c || !bx) break;
+      const v = bx.v;
+      if (p < 1){ c.fantomes.push({deXY: centreBoite(bx), vers: a.i, v, p: lisse(p)}); bx.v = ''; }
+      else { c.vals[a.i - 1] = v; bx.v = ''; c.etats[a.i - 1] = a.style || 'trie'; }
+      break; }
+    case 'code': {
+      const el = document.createElement('div'); el.className = 'o code'; place(el, a); el.style.fontSize = (a.taille || 22) + 'px';
+      el.style.opacity = lisse(p); if (a.largeur) el.style.width = a.largeur + 'px';
+      el.innerHTML = a.lignes.map((l, k) => '<div class="r' + ((a.commentaires||[]).includes(k+1) ? ' com' : '') + '"><span class="n">' + (k+1) +
+        '</span><span class="c">' + esc(l) + '</span>' + (a.compte ? '<span class="k"></span>' : '') + '</div>').join('');
+      scene.appendChild(el); O[a.id] = {type:'code', el}; break; }
+    case 'hl': { if (!o) break; o.el.querySelectorAll('.r').forEach((r, k) => r.classList.toggle('hl', a.n != null && [].concat(a.n).includes(k+1))); break; }
+    case 'compte': { if (!o) break; const r = o.el.querySelectorAll('.r')[a.n - 1]; if (r) { const k = r.querySelector('.k'); k.innerHTML = deco(String(a.v)); k.style.opacity = lisse(p); } break; }
+    case 'table': {
+      const el = document.createElement('table'); el.className = 'o tab'; place(el, a); el.style.opacity = lisse(p);
+      if (a.taille) el.style.fontSize = a.taille + 'px';
+      let h = '<tr>' + a.entetes.map((x, c) => '<th' + (a.largeurs ? ' style="width:' + a.largeurs[c] + 'px"' : '') + '>' + deco(x) + '</th>').join('') + '</tr>';
+      for (const l of a.lignes) h += '<tr>' + l.map(x => '<td>' + cellule(x) + '</td>').join('') + '</tr>';
+      el.innerHTML = h; scene.appendChild(el); O[a.id] = {type:'table', el}; break; }
+    case 'cellule': { if (!o) break; const td = o.el.rows[a.r].cells[a.c]; td.innerHTML = cellule(a.texte); td.style.opacity = lisse(p);
+      if (a.couleur) td.style.color = {rouge:'#bd1f2b', vert:'#0a7441', bleu:'#1c3bb0', orange:'#b15c00'}[a.couleur];
+      if (a.fond) td.style.background = a.fond; break; }
+    case 'compteur': {
+      let el = o && o.el;
+      if (!el){ el = document.createElement('div'); el.className = 'o cpt'; place(el, a); scene.appendChild(el); O[a.id] = {type:'compteur', el}; }
+      el.style.color = {rouge:'#bd1f2b', vert:'#0a7441', bleu:'#1c3bb0', orange:'#b15c00'}[a.couleur || 'bleu']; el.style.borderColor = el.style.color;
+      el.innerHTML = deco(a.label) + ' <b>' + deco(String(a.valeur)) + '</b>' + (p < 1 && o ? '<span class="fl" style="opacity:' + (0.8*(1-p)) + '"></span>' : '');
+      el.style.position = 'absolute'; break; }
+    case 'fleche': case 'trait': {
+      const d = a.courbe ? 'M' + a.x1 + ',' + a.y1 + ' Q' + ((a.x1 + a.x2) / 2) + ',' + (Math.min(a.y1, a.y2) - a.courbe) + ' ' + a.x2 + ',' + a.y2
+                         : 'M' + a.x1 + ',' + a.y1 + ' L' + a.x2 + ',' + a.y2;
+      const coul = {rouge:'#bd1f2b', vert:'#0a7441', bleu:'#1c3bb0', orange:'#b15c00', gris:'#7a849c'}[a.couleur || 'rouge'];
+      const id = 'm' + Math.random().toString(36).slice(2, 8);
+      const grp = document.createElementNS('http://www.w3.org/2000/svg', 'g'); svg.appendChild(grp);
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d); path.setAttribute('fill', 'none'); path.setAttribute('stroke', coul); path.setAttribute('stroke-width', a.epaisseur || 4);
+      path.setAttribute('stroke-linecap', 'round'); grp.appendChild(path);
+      const L = path.getTotalLength(); path.setAttribute('stroke-dasharray', L); path.setAttribute('stroke-dashoffset', L * (1 - lisse(p)));
+      if (a.type === 'fleche' && p >= 1){
+        const q = path.getPointAtLength(L), r = path.getPointAtLength(Math.max(0, L - 14));
+        const ang = Math.atan2(q.y - r.y, q.x - r.x), s = 16;
+        const tri = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        tri.setAttribute('d', 'M' + q.x + ',' + q.y + ' L' + (q.x - s * Math.cos(ang - .45)) + ',' + (q.y - s * Math.sin(ang - .45)) + ' L' + (q.x - s * Math.cos(ang + .45)) + ',' + (q.y - s * Math.sin(ang + .45)) + 'Z');
+        tri.setAttribute('fill', coul); grp.appendChild(tri);
+      }
+      O[a.id] = {type:'svg', el: grp}; break; }
+    case 'entoure': {
+      const coul = {rouge:'#bd1f2b', vert:'#0a7441', bleu:'#1c3bb0', orange:'#b15c00'}[a.couleur || 'rouge'];
+      const e = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      e.setAttribute('cx', a.x + a.w / 2); e.setAttribute('cy', a.y + a.h / 2); e.setAttribute('rx', a.w / 2 + 10); e.setAttribute('ry', a.h / 2 + 8);
+      e.setAttribute('fill', 'none'); e.setAttribute('stroke', coul); e.setAttribute('stroke-width', 4);
+      svg.appendChild(e); const L = e.getTotalLength(); e.setAttribute('stroke-dasharray', L); e.setAttribute('stroke-dashoffset', L * (1 - lisse(p)));
+      O[a.id] = {type:'svg', el: e}; break; }
+    case 'efface': {
+      const ids = a.ids === 'tout' ? Object.keys(O).filter(k => !(a.garder || []).includes(k)) : a.ids;
+      for (const k of ids){ const x = O[k]; if (!x) continue;
+        if (p >= 1){ x.el.remove(); delete O[k]; }
+        else x.el.style.opacity = String((1 - p) * (parseFloat(x.el.style.opacity || 1))); }
+      break; }
+    case 'pause': break;
+  }
+}
+function cellule(x){ return (typeof x === 'string' && x.startsWith('$')) ? tex(x.slice(1, -1)) : deco(x == null ? '' : x); }
+function centreBoite(bx){ const r = bx.el.getBoundingClientRect(); return {x: r.left + r.width / 2, y: r.top + r.height / 2 + 12}; }
+
+function dessinerCases(o){
+  const s = o.s, g = o.g, a = o.a;
+  o.el.innerHTML = '';
+  o.vals.forEach((v, k) => {
+    const i = k + 1, d = document.createElement('div'); d.className = 'case ' + (o.etats[k] || '');
+    d.style.width = s + 'px'; d.style.marginRight = g + 'px';
+    d.innerHTML = '<div class="v" style="width:' + s + 'px;height:' + s + 'px;font-size:' + Math.round(s * .58) + 'px">' + esc(v) + '</div>' +
+      (a.indices === false ? '' : '<div class="i">' + (a.premier == null ? i : a.premier + k) + '</div>');
+    if (o.flash[i]) { const f = document.createElement('div'); f.className = 'flash'; f.style.height = s + 'px'; f.style.opacity = .85 * o.flash[i]; d.appendChild(f); }
+    o.el.appendChild(d);
+  });
+  // marques sous les cases
+  for (const nom in o.marques){ const m = o.marques[nom], cell = o.el.children[m.i - 1]; if (!cell) continue;
+    const e = document.createElement('div'); e.className = 'mq'; e.textContent = nom; e.style.background = m.c;
+    e.style.top = (s + 34 + 34 * m.rang) + 'px'; cell.appendChild(e); }
+  // valeurs en vol
+  const base = o.el.getBoundingClientRect();
+  function xy(i){ return {x: base.left + (i - 1) * (s + g) + s / 2, y: base.top + s / 2}; }
+  for (const f of o.fantomes){
+    const A = f.deXY || xy(f.de), B = f.versXY || xy(f.vers);
+    const x = A.x + (B.x - A.x) * f.p, y = A.y + (B.y - A.y) * f.p - Math.sin(Math.PI * f.p) * 70;
+    const e = document.createElement('div'); e.className = 'fantome';
+    e.style.width = s + 'px'; e.style.height = s + 'px'; e.style.fontSize = Math.round(s * .58) + 'px';
+    e.style.left = (x - s / 2) + 'px'; e.style.top = (y - s / 2) + 'px'; e.textContent = f.v;
+    document.getElementById('scene').appendChild(e);
+  }
+  o.fantomes = [];
+}
+</script></body></html>

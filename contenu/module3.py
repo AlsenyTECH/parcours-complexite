@@ -38,7 +38,7 @@ COMPRENDRE = r"""
 <p class="lead">Tu tiens des cartes dans ta main gauche, déjà rangées. Tu en pioches une nouvelle : tu la glisses
 de droite à gauche, en décalant chaque carte plus grande qu'elle, jusqu'à trouver sa place. Puis tu recommences
 avec la carte suivante. Le tri par insertion, c'est exactement ce geste.</p>
-""" + video("m3-insertion.mp4", "Du pseudo-code à T(n) : le tri par insertion, pas à pas", "2 min 41") + r"""
+""" + video("m3-insertion.mp4", "Le tri par insertion au tableau : l'exemple, le comptage ligne par ligne, le meilleur et le pire cas", "7 min 41") + r"""
 
 <h3>L'algorithme</h3>
 <p>Voici la version de l'annale 2024-2025, avec sa numérotation de lignes. Le tableau est indexé de 1 à \(n\).</p>
@@ -190,12 +190,18 @@ on suppose les éléments distincts et les \(n!\) ordres possibles <strong>équi
     \[ \mathbb{E}\Big[\sum_{j=2}^{n} t_j\Big] = \frac12 \sum_{j=2}^{n} (j+1) = \frac12\Big(\frac{(n+1)(n+2)}{2} - 3\Big) = \frac{n^2 + 3n - 4}{4}, \]
     et \(T_{\text{moy}}(n) = c\big(3 \cdot \frac{n^2+3n-4}{4} + 2n - 1\big) = c\big(\frac{3n^2}{4} + \frac{17n}{4} - 4\big)\).</p>""") + r"""
 
-""" + examen(r"""<p>Pour l'exercice 2 de l'annale, voici ce qui rapporte les points :</p>
+""" + examen(r"""<p>Pour l'exercice 2 de l'annale, voici ce qui rapporte les points, et pourquoi.</p>
 <ul>
-<li>le <strong>tableau</strong> ligne / coût / nombre d'exécutions, avec la justification du \(n\) de la ligne 1 et des \(t_j - 1\) ;</li>
-<li>la <strong>formule simplifiée</strong> \(T(n) = c(3\sum t_j + 2n - 1)\) ;</li>
-<li>pour \(T_{\min}\) et \(T_{\max}\) : la valeur des \(t_j\), <strong>pourquoi</strong> c'est le minimum ou le maximum, et <strong>quelle entrée</strong> l'atteint ;</li>
-<li>la conclusion asymptotique : \(\Theta(n)\) et \(\Theta(n^2)\).</li>
+<li><strong>Le tableau ligne / coût / nombre d'exécutions.</strong> C'est la preuve que tu as compté. Une formule écrite seule semble sortie de nulle part :
+le correcteur ne peut pas savoir si elle est juste par hasard.</li>
+<li><strong>La justification de la ligne 1 (\(n\) fois) et des lignes 6 et 7 (\(t_j - 1\) fois).</strong> Ce sont les deux endroits où les copies se trompent,
+donc ceux que le correcteur vérifie en premier. Une phrase suffit : « le dernier test de la boucle Pour, pour \(j = n+1\), est faux et compte aussi »,
+et « le corps du tant que s'exécute une fois par test vrai, et seul le dernier des \(t_j\) tests est faux ».</li>
+<li><strong>La formule simplifiée \(T(n) = c(3\sum t_j + 2n - 1)\).</strong> Elle montre que tu sais regrouper : la question 3 demande « en fonction de \(c\), des \(t_j\) et de \(n\) »,
+pas une somme de huit termes.</li>
+<li><strong>Pour \(T_{\min}\) et \(T_{\max}\) : la valeur des \(t_j\), pourquoi c'est le minimum ou le maximum, et quelle entrée l'atteint.</strong>
+Sans l'entrée, tu as seulement un minorant ou un majorant ; c'est l'entrée (tableau trié, ou trié à l'envers) qui prouve que la borne est atteinte.</li>
+<li><strong>La conclusion asymptotique, \(\Theta(n)\) et \(\Theta(n^2)\).</strong> C'est la réponse à la question qu'on se pose vraiment : comment le coût grandit avec \(n\).</li>
 </ul>""") + master(r"""<p>Le temps du tri par insertion <em>dépend des données</em> : rapide sur un tableau presque trié, lent sur un tableau à l'envers.
 En cryptographie, c'est un défaut grave. Un attaquant qui mesure le temps d'exécution apprend quelque chose sur les données secrètes :
 c'est une <strong>attaque par canal auxiliaire</strong>. Les bibliothèques cryptographiques écrivent donc leurs opérations sur les secrets

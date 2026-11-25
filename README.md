@@ -83,14 +83,38 @@ CORPS["m3-recherche"] = etape(ENTREE, COMPRENDRE, DEMONTRER, IMPLEMENTER, EXERCE
 
 Les formules s'écrivent en LaTeX entre `\(…\)` et `\[…\]`.
 
-## Vidéos
+## Vidéos : des tutos au tableau
 
-```bash
-pip install kokoro-onnx soundfile          # + Playwright (Node) et ffmpeg
-KOKORO_DIR=/chemin/vers/modeles python3 outils/video/generer.py outils/video/scripts/m3-insertion.json
+Les tutos s'écrivent en Python dans `outils/video/tutos/<étape>.py`, comme une suite de répliques : chaque phrase dite par la voix
+est accompagnée des gestes faits au tableau pendant qu'elle est prononcée.
+
+```python
+T.dit("Premier test : huit est-il plus grand que deux ? Oui. On décale le huit dans la case libre.",
+      marque("T", "i", 2, ROUGE), ecrire("c2", 300, 420, "8 > 2 ?  oui → on décale"),
+      glisse("T", 2, 3, a=0.7))          # a = moment du geste dans la phrase (0 → début, 1 → fin)
+T.pause("Combien de fois la ligne 1 est-elle exécutée ?", 7)
 ```
 
-Le script JSON décrit chaque scène (voix, lignes écrites au tableau, légende). L'outil produit le `.mp4`
-et le `.vtt` dans `docs/videos/`.
+Gestes disponibles : `ecrire`, `formule` (LaTeX), `cases` (tableau de valeurs), `valeur`, `etat` (trié, actif, clé, vide, éliminé),
+`marque` (i, j… sous une case), `glisse` (une valeur vole d'une case à l'autre), `boite`, `extrait`, `depose`, `code`, `hl` (surligner
+des lignes), `compte` (nombre d'exécutions d'une ligne), `table`, `cellule`, `compteur`, `fleche`, `trait`, `entoure`, `efface`, et `pause`.
+
+```bash
+cd outils/video && npm install katex@0.16.11       # une fois ; + Playwright (Node), ffmpeg, pip install kokoro-onnx soundfile
+python3 tuto.py tutos/m3-insertion.py --brouillon /tmp/images   # minutage estimé + une image par réplique : contrôle de la mise en page
+KOKORO_DIR=/chemin/vers/modeles python3 tuto.py tutos/m3-insertion.py   # la vidéo et ses sous-titres dans docs/videos/
+```
+
+**Ce qu'est un bon tuto** (la règle de tous les tutos du site) :
+
+1. une **question** pour commencer, qui dit ce qu'on va savoir faire à la fin ;
+2. un **exemple travaillé au tableau** avant toute formule ;
+3. le **pourquoi** de chaque étape, dit à voix haute (« pourquoi n et pas n − 1 ? ») ;
+4. les **erreurs classiques**, montrées et corrigées ;
+5. au moins une **pause « à toi »** avant une réponse importante ;
+6. une **vérification** sur l'exemple, puis un **bilan** court : la méthode, réutilisable ailleurs.
+
+L'ancien outil (`generer.py`, `page.html`, scripts JSON) n'écrit que des lignes de texte ; il reste pour mémoire, les tutos
+sont refaits avec `tuto.py`.
 
 Licences : voir `LICENCE.md`.

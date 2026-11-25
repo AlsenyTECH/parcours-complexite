@@ -109,6 +109,8 @@ def fiche(e):
     lignes = '<dt>Prérequis</dt><dd>%s</dd><dt>Sert ensuite à</dt><dd>%s</dd>' % (pre, ouv)
     if e.examen:
         lignes += '<dt>À l\'examen</dt><dd><span class="pastille exam">%s</span></dd>' % html.escape(e.examen)
+    if e.cours:
+        lignes += '<dt>Dans le cours</dt><dd>%s</dd>' % html.escape(e.cours)
     return '<div class="fiche"><dl>%s</dl></div>' % lignes
 
 
