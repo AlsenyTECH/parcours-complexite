@@ -3,3 +3,5 @@ __pycache__/
 outils/video/modeles/
 .DS_Store
 outils/video/node_modules/
+.venv/
+_site/

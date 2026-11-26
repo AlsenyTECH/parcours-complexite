@@ -1,0 +1,51 @@
+# Construit le site avec le moteur et le publie sur GitHub Pages.
+# Le site n'est plus dans Git : il est reconstruit à chaque poussée sur main.
+# Réglage nécessaire, une fois : Settings → Pages → Source : « GitHub Actions ».
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  pull_request:          # sur une demande de fusion : construit seulement, ne publie pas
+  workflow_dispatch:     # relancer à la main depuis l'onglet Actions
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer le moteur
+        run: pip install -r requirements.txt
+      - name: Construire le site
+        run: moteur construire
+      - name: Vérifier les nombres des modules rédigés
+        run: |
+          python outils/verifier_module0.py
+          python outils/verifier_insertion.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  publier:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: construire
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write       # publier sur Pages
+      id-token: write    # prouver à Pages que la publication vient bien de cette action
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4

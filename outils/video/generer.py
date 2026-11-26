@@ -5,7 +5,7 @@
 
 Étapes : voix off de chaque scène (Kokoro, voix française) -> durées -> capture image par image
 de page.html (Playwright) -> assemblage ffmpeg en 1280x720 -> sous-titres WebVTT calés sur la voix.
-Sorties : docs/videos/<fichier>.mp4 et docs/videos/<fichier>.vtt.
+Sorties : videos/<fichier>.mp4 et videos/<fichier>.vtt.
 
 Prérequis : pip install kokoro-onnx soundfile ; Playwright (Node) ; ffmpeg ;
 les fichiers kokoro-v1.0.onnx et voices-v1.0.bin (variable KOKORO_DIR).
@@ -76,7 +76,7 @@ def main(chemin):
     json.dump({"scenes": scenes, "total": total, "ips": IPS}, open(plan, "w"))
     muet = os.path.join(tmp, "muet.mp4")
     subprocess.run(["node", os.path.join(ICI, "capturer.js"), plan, muet], check=True)
-    dossier = os.path.join(RACINE, "docs", "videos")
+    dossier = os.path.join(RACINE, "videos")
     os.makedirs(dossier, exist_ok=True)
     sortie = os.path.join(dossier, script["fichier"])
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", muet, "-i", wav, "-c:v", "copy",
