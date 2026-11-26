@@ -1,0 +1,3 @@
+# Le moteur de contenu MathNexus, à une version épinglée.
+# @main tant que le moteur n'a pas d'étiquette ; ensuite @vX.Y.Z.
+mathnexus-moteur @ git+https://github.com/AlsenyTECH/mathnexus-moteur@main

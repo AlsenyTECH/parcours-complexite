@@ -6,7 +6,7 @@ Toutes les valeurs numériques de cette page (traces, tⱼ, T(n), moyennes) ont 
 par simulation : voir outils/verifier_insertion.py.
 """
 
-from briques import (retenir, demo, prof, master, exercice, video, qcm, preuve, a_toi, a_retenir,
+from moteur.blocs import (retenir, demo, prof, master, exercice, video, qcm, preuve, a_toi, a_retenir,
                      etape, atelier, examen, methode, animateur, mesure, tableau)
 
 CORPS = {}

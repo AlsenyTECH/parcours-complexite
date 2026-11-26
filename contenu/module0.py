@@ -6,7 +6,7 @@
 Valeurs numériques vérifiées par outils/verifier_module0.py.
 """
 
-from briques import (retenir, prof, master, exercice, video, qcm, preuve, a_toi, a_retenir,
+from moteur.blocs import (retenir, prof, master, exercice, video, qcm, preuve, a_toi, a_retenir,
                      etape, atelier, examen, methode, animateur, mesure, tableau)
 
 CORPS = {}

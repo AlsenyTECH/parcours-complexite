@@ -1,0 +1,60 @@
+# Réglages du parcours, lus par « moteur construire » (mathnexus-moteur).
+# Le moteur s'installe avec : pip install -r requirements.txt
+
+[parcours]
+titre = "Parcours Complexité"
+titre_long = "Parcours Complexité des algorithmes"
+sous_titre = "Mesurer, calculer, comparer — de la boucle au cryptosystème"
+description = "Un parcours complet et interactif sur la complexité des algorithmes : notations asymptotiques, analyse des boucles et des récursions, classes P et NP, et application aux algorithmes cryptographiques."
+auteur = "MathNexus"
+annee = 2026
+
+[site]
+sortie = "docs"                  # GitHub Pages publie docs/ (jusqu'à la publication par action)
+videos = "docs/videos"
+prefixe_stockage = "complexite"  # clés localStorage : tous les sites partagent alsenytech.github.io
+icone = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23bd1f2b'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='serif'%3EO%3C/text%3E%3C/svg%3E"
+message_accueil_vide = "Aucune étape validée pour l'instant. Commence par le module 0, ou va directement à l'étape pilote 3.3."
+css = ["modele/complexite.css"]
+js = ["modele/animateur.js", "modele/calculateur.js"]   # composants propres à ce parcours
+scripts_partie = ["site.js", "atelier.js", "animateur.js", "mesure.js"]
+
+[[site.barre]]
+lien = "index.html"
+texte = "Accueil"
+
+[[site.barre]]
+lien = "calculateurs.html"
+texte = "Calculateurs"
+
+[[site.barre]]
+lien = "module-9.html"
+texte = "Préparer l'examen"
+
+[[site.sommaire]]
+lien = "calculateurs.html"
+symbole = "∑"
+texte = "Calculateurs"
+
+[parties]
+nom = "Module"
+demonstratif = "ce module"
+complement = "du module"
+fichier = "module-{num}.html"
+
+[gabarit]
+temps = [
+  { nom = "Comprendre", consigne = "Lis, regarde la vidéo, fais tourner l'algorithme dans l'animateur." },
+  { nom = "Démontrer", consigne = "Refais chaque calcul sur une feuille avant d'ouvrir la correction." },
+  { nom = "Implémenter", consigne = "Code l'algorithme dans la page, les tests vérifient, la mesure trace ce qu'il coûte vraiment." },
+  { nom = "S'exercer", consigne = "Exercices gradués, puis le test de sortie qui valide l'étape." },
+]
+
+[mathjax.macros]
+N = '\mathbb{N}'
+Z = '\mathbb{Z}'
+R = '\mathbb{R}'
+F = '\mathbb{F}'
+pgcd = '\operatorname{pgcd}'
+Card = '\operatorname{Card}'
+cle = '\text{clé}'

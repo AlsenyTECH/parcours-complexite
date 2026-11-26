@@ -16,14 +16,20 @@ Le site comprend aussi une page de **calculateurs** (temps selon la complexité,
 
 ## État
 
-Lancer `python3 build.py` affiche l'avancement module par module. Rédigés : module 0 (0.1 et 0.2) et l'étape pilote 3.3
+Lancer `moteur construire` affiche l'avancement module par module. Rédigés : module 0 (0.1 et 0.2) et l'étape pilote 3.3
 (exercice 2 de l'annale UCAD 2024-2025). Les autres étapes affichent leur fiche (objectif, prérequis, lien avec l'examen)
 en attendant leur cours. Les nombres de chaque module rédigé sont vérifiés par un script de `outils/`.
 
 ## Construire et publier
 
+Le site est construit par le moteur de contenu MathNexus
+([mathnexus-moteur](https://github.com/AlsenyTECH/mathnexus-moteur)), installé à une version épinglée
+dans `requirements.txt`. Les réglages du site sont dans `parcours.toml`.
+
 ```bash
-python3 build.py                     # régénère docs/ à partir du contenu
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt      # installe le moteur (commande « moteur »)
+moteur construire                    # régénère le site à partir du contenu
 python3 outils/verifier_module0.py   # vérifie les nombres et les corrigés du module 0
 python3 outils/verifier_insertion.py # vérifie par simulation les nombres de l'étape 3.3
 cd docs && python3 -m http.server    # aperçu sur http://localhost:8000
@@ -37,20 +43,16 @@ ont besoin que le site soit servi par un serveur (en ligne, ou `python3 -m http.
 ## Organisation
 
 ```
-build.py               le générateur : lit contenu/, écrit docs/ ; vérifie prérequis et vidéos
+parcours.toml          les réglages du site (titres, liens, macros, scripts, nom des parties)
+requirements.txt       la version du moteur
 contenu/
   registre.py          les 10 modules et leurs 50 étapes : titres, objectifs, prérequis, lien avec l'annale
-  briques.py           les blocs d'écriture (voir ci-dessous)
   module3.py …         le cours rédigé, un fichier par module (dictionnaire CORPS)
-modele/
-  style.css            identité visuelle commune aux sites MathNexus (cahier quadrillé / tableau noir)
-  complexite.css       ajouts : animateur, mesure, calculateurs, accueil ; polices embarquées
-  site.js              navigation, quatre temps, QCM, progression gardée sur l'appareil
-  atelier.js, atelier-worker.js   ateliers de code (Pyodide, dans un fil séparé)
+  pages.py             les pages propres : l'accueil et les calculateurs
+modele/                ce qui est propre à ce parcours (le reste vient du moteur)
+  complexite.css       ajouts : animateur, mesure, calculateurs, accueil
   animateur.js         l'animateur pas à pas (un algorithme = une fonction trace)
-  mesure.js            la mesure expérimentale et son graphique
   calculateur.js       les calculateurs
-  vendor/              MathJax, Pyodide, polices
 outils/
   verifier_insertion.py   simulation qui vérifie toutes les valeurs de l'étape 3.3
   video/                  génération des vidéos et de leurs sous-titres (voix Kokoro, capture Playwright, ffmpeg)
@@ -60,7 +62,9 @@ docs/                  LE SITE — ne rien y modifier à la main, c'est écrasé
 
 ## Rédiger une étape
 
-L'étape existe déjà dans `contenu/registre.py`. Son cours s'écrit dans `contenu/moduleN.py` :
+L'étape existe déjà dans `contenu/registre.py`. Son cours s'écrit dans `contenu/moduleN.py`, avec les briques
+du moteur (`from moteur.blocs import retenir, preuve, …`). Chaque brique renvoie un objet, et on les assemble
+avec `+` entre du HTML simple ; un bloc ne se met pas dans un `%` ou un `join` (erreur claire).
 
 ```python
 CORPS["m3-recherche"] = etape(ENTREE, COMPRENDRE, DEMONTRER, IMPLEMENTER, EXERCER, SORTIE, RETENIR)

@@ -1,0 +1,33 @@
+# Preuve de l'étape M1 du moteur : le site construit par « moteur construire » est identique,
+# à l'octet près, à celui de l'ancien build.py (commit 2df94a6, étiquette avant-moteur).
+# Temporaire : à supprimer au premier changement de contenu, puisque le site changera alors exprès.
+name: Preuve M1 (site identique)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  comparer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Récupérer l'ancien dépôt (référence)
+        uses: actions/checkout@v4
+        with:
+          ref: 2df94a672c237697b421dda3c11fe5905795deb0
+          path: reference
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Site de référence (ancien build.py)
+        run: |
+          cd reference
+          python3 build.py
+          mv docs /tmp/reference
+      - name: Installer le moteur
+        run: pip install -r requirements.txt
+      - name: Site construit par le moteur
+        run: moteur construire --sortie /tmp/nouveau
+      - name: Comparer octet par octet
+        run: moteur comparer /tmp/reference /tmp/nouveau

@@ -4,33 +4,14 @@
 Une étape ajoutée ici apparaît automatiquement dans l'accueil, dans le sommaire de son module
 et dans la liste « prérequis » des étapes qui la citent. Le cours d'une étape se rédige dans
 contenu/moduleN.py (dictionnaire CORPS) ; tant qu'il n'existe pas, la page affiche la fiche de l'étape.
+
+Les classes Etape et Partie, l'index, la numérotation et le contrôle des prérequis viennent du
+moteur (mathnexus-moteur, moteur/registre.py). Un module de ce parcours est une Partie du moteur.
 """
 
+from moteur.registre import Etape as E, Partie as Module
 
-class Etape:
-    def __init__(self, ident, titre, minutes, objectif, prereq=(), examen=None, cours=None):
-        self.id = ident
-        self.titre = titre
-        self.minutes = minutes
-        self.objectif = objectif        # « ce qu'on doit savoir faire » à la fin
-        self.prereq = list(prereq)
-        self.examen = examen            # question d'annale que l'étape prépare, s'il y en a
-        self.cours = cours              # partie correspondante du cours de complexité de l'UCAD
-        self.corps = None               # rempli par build.py depuis contenu/moduleN.py
-        self.video = None
-
-
-class Module:
-    def __init__(self, num, titre, resume, etapes):
-        self.num = num
-        self.titre = titre
-        self.resume = resume
-        self.etapes = etapes
-        self.fichier = "module-%d.html" % num
-
-
-E = Etape
-MODULES = [
+PARTIES = [
     Module(0, "Pourquoi la complexité", "Deux algorithmes justes peuvent différer d'un facteur un milliard. Mesurer, c'est choisir.", [
         E("m0-deux-algos", "Deux algorithmes, un même problème", 25,
           "Comparer recherche séquentielle et dichotomique sur un million de valeurs, et dire pourquoi l'une gagne.",
@@ -203,28 +184,3 @@ MODULES = [
           "Restituer les définitions et les exemples du cours en 20 minutes."),
     ]),
 ]
-
-INDEX = {}
-for _m in MODULES:
-    for _e in _m.etapes:
-        INDEX[_e.id] = (_e, _m)
-
-
-def verifier():
-    """Chaque prérequis existe et vient avant l'étape qui le cite (dans l'ordre du parcours)."""
-    ordre = [e.id for m in MODULES for e in m.etapes]
-    pbs = []
-    if len(ordre) != len(set(ordre)):
-        pbs.append("identifiant d'étape en double")
-    for i, eid in enumerate(ordre):
-        for p in INDEX[eid][0].prereq:
-            if p not in INDEX:
-                pbs.append("%s : prérequis inconnu %s" % (eid, p))
-            elif ordre.index(p) >= i:
-                pbs.append("%s : le prérequis %s vient après" % (eid, p))
-    return pbs
-
-
-def numero(eid):
-    e, m = INDEX[eid]
-    return "%d.%d" % (m.num, m.etapes.index(e) + 1)

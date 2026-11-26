@@ -3,7 +3,9 @@
 
     python3 outils/verifier_module0.py
 """
-import math, os, re, sys
+import html, math, os, re, sys
+
+from moteur.blocs import Atelier, parcourir
 
 ICI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(ICI, "..", "contenu"))
@@ -46,22 +48,19 @@ assert abs(26 ** 8 / 1e10 - 20.9) < 0.1 and abs(94 ** 12 / 1e10 / AN / 1e6 - 1.5
 assert math.ceil(math.log2(2 ** 80 / 1e18 / 86400)) == 4
 
 # corrigés des ateliers contre leurs tests
+# Les blocs sont des objets : on lit directement le code de départ, les tests et le corrigé de
+# chaque atelier, au lieu de les chercher dans le HTML. Seul le corrigé reste du HTML (un <pre>).
 def corrige(html_):
     src = re.search(r'<pre class="pseudo">(.*?)</pre>', html_, re.S).group(1)
-    return src.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
+    return html.unescape(src)
 
 for eid, depart_fn in [("m0-deux-algos", None), ("m0-attaque", "chiffrer")]:
-    page = module0.CORPS[eid]
-    bloc = re.search(r'<div class="atelier".*?</details></div>', page, re.S).group(0)
+    at = next(n for n in parcourir(module0.CORPS[eid]) if isinstance(n, Atelier))
     ns = {}
     if depart_fn:
-        depart = re.search(r'<textarea[^>]*>(.*?)</textarea>', bloc, re.S).group(1)
-        depart = depart.replace("&#x27;", "'").replace("&quot;", '"').replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
-        exec(depart.split("def attaque")[0], ns)
-    exec(corrige(bloc.split('atelier-corrige')[1]), ns)
-    import json, html
-    tests = json.loads(html.unescape(re.search(r'<script type="application/json" class="atelier-tests">(.*?)</script>', bloc, re.S).group(1)).replace("<\\/", "</"))
-    for t in tests:
+        exec(at.depart.split("def attaque")[0], ns)
+    exec(corrige(at.corrige), ns)
+    for t in at.tests:
         r = eval(t["appel"], ns)
         env = dict(ns); env["r"] = r
         assert eval(t["verif"], env), (eid, t["appel"], r)
