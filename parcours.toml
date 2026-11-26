@@ -10,8 +10,8 @@ auteur = "MathNexus"
 annee = 2026
 
 [site]
-sortie = "docs"                  # GitHub Pages publie docs/ (jusqu'à la publication par action)
-videos = "docs/videos"
+sortie = "_site"                 # site construit, ignoré par Git ; publié par l'action « Publier le site »
+videos = "videos"                # vidéos du parcours (dans Git jusqu'au passage à Bunny Stream, M6)
 prefixe_stockage = "complexite"  # clés localStorage : tous les sites partagent alsenytech.github.io
 icone = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23bd1f2b'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='serif'%3EO%3C/text%3E%3C/svg%3E"
 message_accueil_vide = "Aucune étape validée pour l'instant. Commence par le module 0, ou va directement à l'étape pilote 3.3."

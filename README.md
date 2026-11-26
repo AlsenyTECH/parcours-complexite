@@ -32,10 +32,12 @@ pip install -r requirements.txt      # installe le moteur (commande « moteur »
 moteur construire                    # régénère le site à partir du contenu
 python3 outils/verifier_module0.py   # vérifie les nombres et les corrigés du module 0
 python3 outils/verifier_insertion.py # vérifie par simulation les nombres de l'étape 3.3
-cd docs && python3 -m http.server    # aperçu sur http://localhost:8000
+cd _site && python3 -m http.server   # aperçu sur http://localhost:8000
 ```
 
-GitHub Pages : *Settings → Pages*, branche `main`, dossier `/docs`.
+Le site construit (`_site/`) n'est pas dans Git. À chaque poussée sur `main`, l'action **Publier le site**
+(`.github/workflows/publier.yml`) installe le moteur, construit le site, vérifie les nombres et le publie sur
+GitHub Pages (*Settings → Pages → Source : GitHub Actions*).
 
 Tout fonctionne hors ligne (MathJax, polices et Python sont dans le dépôt), sauf une limite : les ateliers de code
 ont besoin que le site soit servi par un serveur (en ligne, ou `python3 -m http.server`), pas ouvert par double-clic.
@@ -56,8 +58,8 @@ modele/                ce qui est propre à ce parcours (le reste vient du moteu
 outils/
   verifier_insertion.py   simulation qui vérifie toutes les valeurs de l'étape 3.3
   video/                  génération des vidéos et de leurs sous-titres (voix Kokoro, capture Playwright, ffmpeg)
-docs/                  LE SITE — ne rien y modifier à la main, c'est écrasé à chaque construction
-  videos/              les .mp4 et leurs sous-titres .vtt
+videos/                les .mp4 et leurs sous-titres .vtt (dans Git jusqu'au passage à Bunny Stream)
+_site/                 LE SITE CONSTRUIT — ignoré par Git, refait à chaque construction
 ```
 
 ## Rédiger une étape
@@ -106,7 +108,7 @@ des lignes), `compte` (nombre d'exécutions d'une ligne), `table`, `cellule`, `c
 ```bash
 cd outils/video && npm install katex@0.16.11       # une fois ; + Playwright (Node), ffmpeg, pip install kokoro-onnx soundfile
 python3 tuto.py tutos/m3-insertion.py --brouillon /tmp/images   # minutage estimé + une image par réplique : contrôle de la mise en page
-KOKORO_DIR=/chemin/vers/modeles python3 tuto.py tutos/m3-insertion.py   # la vidéo et ses sous-titres dans docs/videos/
+KOKORO_DIR=/chemin/vers/modeles python3 tuto.py tutos/m3-insertion.py   # la vidéo et ses sous-titres dans videos/
 ```
 
 **Ce qu'est un bon tuto** (la règle de tous les tutos du site) :

@@ -10,7 +10,7 @@ surligner une ligne de pseudo-code, remplir un tableau, tracer une flèche…).
 
 Étapes : voix de chaque réplique (Kokoro) → minutage des gestes → capture image par image
 de tuto.html (Playwright) → assemblage ffmpeg → sous-titres WebVTT.
-Sorties : docs/videos/<nom>.mp4 et .vtt.
+Sorties : videos/<nom>.mp4 et .vtt.
 
 Règles d'écriture d'un bon tuto (voir README) : une question pour commencer, un exemple
 travaillé au tableau avant toute formule, le « pourquoi » de chaque étape, les erreurs
@@ -241,7 +241,7 @@ def produire(tuto, kokoro_dir):
     muet = os.path.join(tmp, "muet.mp4")
     print("voix : %d min %02d ; capture des images…" % (int(total) // 60, int(total) % 60), flush=True)
     subprocess.run(["node", os.path.join(ICI, "capturer_tuto.js"), plan, muet], check=True)
-    dossier = os.path.join(RACINE, "docs", "videos")
+    dossier = os.path.join(RACINE, "videos")
     os.makedirs(dossier, exist_ok=True)
     sortie = os.path.join(dossier, tuto.nom + ".mp4")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", muet, "-i", wav, "-c:v", "copy", "-c:a", "aac", "-b:a", "64k",
