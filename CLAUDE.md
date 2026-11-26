@@ -70,9 +70,17 @@ docs/               LE SITE GÉNÉRÉ — ne jamais modifier à la main
 **Parcours** : 3 étapes rédigées sur 52 (module 0 : 0.1 et 0.2 ; étape pilote 3.3, exercice 2 de l'annale UCAD 2024-2025).
 `build.py` passe et régénère `docs/` à l'identique.
 
-**Moteur (chantier 1)** — à faire :
-- [ ] **décider l'organisation** (QCM avec Alseny) : dépôt moteur partagé + un dépôt de contenu par parcours
-      (recommandé par le skill), ou modèle copié dans chaque dépôt ;
+**Moteur (chantier 1)** — plan dans le doc projet « Moteur de contenu — plan » (Claude, projet Dev · Moteur et plateforme).
+Décisions du 26/11/2026 :
+- dépôt **`mathnexus-moteur`** partagé, installé par pip à une version épinglée ; ce dépôt devient un dépôt de contenu ;
+- PDF en **LaTeX au style maison** (`mathnexus.sty`) ;
+- vidéos **sur Bunny Stream pour tout** (site public et plateforme) ;
+- sites publiés par une **action GitHub** : plus de `docs/` généré dans Git, archive hors ligne jointe à chaque version.
+
+Étapes : M0 squelette du moteur → M1 extraction depuis ce dépôt (site identique) → M2 statuts + `cles.lock` →
+M3 sortie paquet → M4 composants partagés + évaluations en données → M5 PDF → M6 vidéos + envoi automatique du paquet.
+
+À faire :
 - [ ] statuts **brouillon → vérifié → publié** dans le registre ;
 - [ ] sortie **paquet plateforme** (format 1 décrit dans `mathnexus-plateforme/backend/contenus/FORMAT_PAQUET.md` :
       manifeste JSON + fragments HTML sans script, composants déclarés par attributs `data-…`) ;
@@ -88,3 +96,4 @@ page ; le format paquet interdit les scripts. Il faudra les déclarer par attrib
 ## Journal
 
 - 26/11/2026 — Création de ce fichier ; état reconstitué depuis le README et le code ; `build.py` relancé.
+- 26/11/2026 — Plan du moteur proposé ; les quatre décisions sont tranchées (voir « État »). Prochaine tâche : M0.
