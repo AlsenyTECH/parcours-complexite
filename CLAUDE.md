@@ -31,6 +31,7 @@ moteur verifier                        # tous les contrôles (statuts, cles.lock
 moteur construire                      # construit _site/ et affiche l'avancement module par module
 moteur construire --brouillons         # aperçu pour relire, avec le cours non publié, dans _apercu/
 moteur verifier --maj-cles             # après avoir publié une étape : ajoute sa clé à cles.lock
+moteur paquet                          # le paquet plateforme (format 1) : _paquet/complexite-algorithmes.zip
 python outils/verifier_module0.py      # vérifie les nombres et corrigés du module 0
 python outils/verifier_insertion.py    # vérifie par simulation l'étape 3.3
 cd _site && python3 -m http.server     # aperçu sur http://localhost:8000
@@ -44,7 +45,8 @@ KOKORO_DIR=/chemin/vers/modeles python3 tuto.py tutos/m3-insertion.py
 ## Organisation
 
 ```
-parcours.toml       réglages du site : titres, liens, macros MathJax, scripts, nom des parties, quatre temps
+parcours.toml       réglages : titres, identité plateforme (slug, matiere, cycle), url du site, liens, macros,
+                    scripts, nom des parties, quatre temps
 requirements.txt    la version du moteur
 cles.lock           les clés des étapes publiées (écrit par moteur verifier --maj-cles, à committer)
 contenu/
@@ -57,6 +59,7 @@ outils/             scripts de vérification, pipeline vidéo (outils/video/)
 .github/workflows/  publier.yml (construit et publie Pages) ; preuve-m1.yml (temporaire, voir État)
 _site/              LE SITE CONSTRUIT — ignoré par Git
 _apercu/            l'aperçu avec les brouillons (moteur construire --brouillons) — ignoré par Git, jamais publié
+_paquet/            le paquet plateforme (moteur paquet) — ignoré par Git ; l'action le joint à chaque exécution
 ```
 
 ## Conventions
@@ -74,15 +77,19 @@ _apercu/            l'aperçu avec les brouillons (moteur construire --brouillon
 - Identifiants d'étapes (`m3-insertion`…) : **ne plus les changer** une fois publiés ; ce sont les clés stables du paquet
   plateforme (la progression des élèves y sera accrochée). `cles.lock` le garantit : la construction refuse une clé
   publiée qui disparaît ou change de nom.
+- Paquet plateforme (moteur v0.3.0) : identité `slug = "complexite-algorithmes"` (ne plus la changer après le premier
+  import), `matiere = "Informatique"`, `cycle = "universite"`. Accès par étape dans le registre : `acces="public"`
+  (vitrine sans compte), sinon `inscrit` par défaut. Seules les étapes publiées entrent dans le paquet ; les vidéos et
+  les liens relatifs pointent vers le site public (`[site] url`) jusqu'à Bunny (M6).
 - Les tutos vidéo suivent la règle du README (question, exemple au tableau, pourquoi, erreurs classiques, pause « à toi »,
   vérification et bilan).
 
-## État (au 27/11/2026)
+## État (au 27/11/2026, M3)
 
 **Parcours** : 3 étapes rédigées et **publiées** sur 52 (module 0 : 0.1 et 0.2 ; étape pilote 3.3, exercice 2 de
 l'annale UCAD 2024-2025) ; les 49 autres sont des brouillons sans cours. `cles.lock` : `m0-attaque`, `m0-deux-algos`,
 `m3-insertion`. Avertissement connu de `moteur verifier` : 3.3 est publiée mais son prérequis `m3-methode` ne l'est pas.
-Le site est construit par le moteur (M1 v0.1.0, puis v0.1.1, puis **M2 v0.2.0**) : identique, octet par octet, à celui de l'ancien `build.py`
+Le site est construit par le moteur (M1 v0.1.0, puis v0.1.1, M2 v0.2.0, puis **M3 v0.3.0**) : identique, octet par octet, à celui de l'ancien `build.py`
 (commit `2df94a6`, étiquette `avant-moteur`). L'action `preuve-m1.yml` refait cette comparaison : **la supprimer au
 premier changement de contenu**, puisque le site changera alors exprès.
 
@@ -98,17 +105,17 @@ M3 sortie paquet → M4 composants partagés + évaluations en données → M5 P
 
 À faire :
 - [x] statuts **brouillon → vérifié → publié** dans le registre, `cles.lock`, `moteur verifier` (M2, v0.2.0) ;
-- [ ] sortie **paquet plateforme** (format 1 décrit dans `mathnexus-plateforme/backend/contenus/FORMAT_PAQUET.md` :
-      manifeste JSON + fragments HTML sans script, composants déclarés par attributs `data-…`) ;
-      aujourd'hui la plateforme convertit les pages HTML avec `outils/convertir_parcours.py`, pont provisoire ;
+- [x] sortie **paquet plateforme** (M3, v0.3.0) : `moteur paquet`, 2 parties (modules 0 et 3), 3 étapes ; 0.1 en
+      `public`, 0.2 et 3.3 en `inscrit` ; construit deux fois par l'action (même archive) et joint à l'exécution ;
+      ateliers, animateur, mesure et QCM sous forme statique jusqu'à M4 ;
 - [ ] génération des **PDF** à partir du même contenu ;
 - [ ] **vidéos** référencées par leur identifiant Bunny Stream, plus stockées dans Git (aujourd'hui dans `videos/`) ;
 - [x] gabarit à troisième temps variable selon la discipline (`[gabarit] temps` dans `parcours.toml`) ;
 - [x] publication par action GitHub, `docs/` retiré de Git (M1) ;
 - [ ] migrer les autres parcours, un à la fois, en gardant chaque site en ligne.
 
-Point d'attention pour le paquet : les ateliers (Pyodide), l'animateur et la mesure reposent sur du JavaScript dans la
-page ; le format paquet interdit les scripts. Il faudra les déclarer par attributs et que l'application les anime.
+Point d'attention pour M4 : les ateliers (Pyodide), l'animateur et la mesure reposent sur du JavaScript dans la page ;
+le paquet les sort sous forme statique avec un attribut `data-composant` : la plateforme devra savoir les monter.
 
 ## Journal
 
@@ -125,3 +132,7 @@ page ; le format paquet interdit les scripts. Il faudra les déclarer par attrib
   `cles.lock` créé par `moteur verifier --maj-cles`, `_apercu/` ignoré, `moteur verifier` dans l'action de publication.
   Preuve : `moteur comparer` site v0.1.1 / site v0.2.0 → sites identiques ; renommer `m3-insertion` fait échouer la
   construction ; « Preuve M1 » (contre l'ancien build.py) toujours verte.
+- 27/11/2026 — M3 : moteur v0.3.0. `slug`, `matiere`, `cycle` et `[site] url` dans parcours.toml, 0.1 en `acces="public"`,
+  `_paquet/` ignoré, paquet construit deux fois et joint par l'action « Publier le site ». Preuves : `moteur comparer`
+  site v0.2.0 / site v0.3.0 → sites identiques ; deux `moteur paquet` → même empreinte ; paquet importé par
+  `importer_paquet` dans la plateforme locale.

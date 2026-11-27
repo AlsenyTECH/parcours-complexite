@@ -30,6 +30,17 @@ jobs:
         run: moteur verifier
       - name: Construire le site
         run: moteur construire
+      # Le paquet pour la plateforme (format 1), construit deux fois : même archive, donc même empreinte.
+      # Il est joint à l'exécution (onglet Actions) ; à M6, l'action l'enverra à l'API d'import.
+      - name: Construire le paquet plateforme
+        run: |
+          moteur paquet
+          moteur paquet --sortie /tmp/deuxieme.zip > /dev/null
+          cmp _paquet/complexite-algorithmes.zip /tmp/deuxieme.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paquet-plateforme
+          path: _paquet/complexite-algorithmes.zip
       - name: Vérifier les nombres des modules rédigés
         run: |
           python outils/verifier_module0.py
