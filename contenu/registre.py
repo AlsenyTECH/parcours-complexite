@@ -3,7 +3,9 @@
 
 Une étape ajoutée ici apparaît automatiquement dans l'accueil, dans le sommaire de son module
 et dans la liste « prérequis » des étapes qui la citent. Le cours d'une étape se rédige dans
-contenu/moduleN.py (dictionnaire CORPS) ; tant qu'il n'existe pas, la page affiche la fiche de l'étape.
+contenu/moduleN.py (dictionnaire CORPS). Seul le cours des étapes publiées sort : une étape sans statut
+est un brouillon et la page affiche sa fiche. Pour publier : statut="publie", puis « moteur verifier --maj-cles »
+(la clé entre dans cles.lock et ne devra plus jamais changer).
 
 Les classes Etape et Partie, l'index, la numérotation et le contrôle des prérequis viennent du
 moteur (mathnexus-moteur, moteur/registre.py). Un module de ce parcours est une Partie du moteur.
@@ -15,10 +17,10 @@ PARTIES = [
     Module(0, "Pourquoi la complexité", "Deux algorithmes justes peuvent différer d'un facteur un milliard. Mesurer, c'est choisir.", [
         E("m0-deux-algos", "Deux algorithmes, un même problème", 25,
           "Comparer recherche séquentielle et dichotomique sur un million de valeurs, et dire pourquoi l'une gagne.",
-          cours="Cours 1, Introduction"),
+          cours="Cours 1, Introduction", statut="publie"),
         E("m0-attaque", "Ce que coûte une attaque", 25,
           "Estimer le temps d'une recherche exhaustive de clé et comprendre pourquoi 128 bits suffisent.",
-          ["m0-deux-algos"]),
+          ["m0-deux-algos"], statut="publie"),
     ]),
     Module(1, "Mesurer un algorithme", "Opérations élémentaires, taille de l'entrée, pire, meilleur et moyen cas.", [
         E("m1-modele", "Le coût d'un algorithme : ce qu'on compte", 35,
@@ -62,7 +64,7 @@ PARTIES = [
           ["m3-methode"], examen="Sujet d'examen 2024-2025, ex. 3", cours="Cours 3, Algorithm 3 (Test)"),
         E("m3-insertion", "Le tri par insertion", 60,
           "Faire tourner le tri par insertion à la main, exprimer T(n) en fonction des tⱼ, puis T_min(n), T_max(n) et le coût moyen.",
-          ["m3-methode"], examen="Sujet d'examen 2024-2025, ex. 2", cours="Cours 3, Tri insertion"),
+          ["m3-methode"], examen="Sujet d'examen 2024-2025, ex. 2", cours="Cours 3, Tri insertion", statut="publie"),
         E("m3-selection-bulles", "Tri par sélection et tri à bulles", 40,
           "Analyser deux autres tris quadratiques et les comparer au tri par insertion.",
           ["m3-insertion"]),
