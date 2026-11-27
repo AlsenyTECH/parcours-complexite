@@ -107,3 +107,5 @@ page ; le format paquet interdit les scripts. Il faudra les déclarer par attrib
   commun, les ateliers, la mesure et vendor/ retirés (fournis par le moteur) ; `pages.py` garde l'accueil et les
   calculateurs ; `verifier_module0.py` lit les ateliers comme objets. Publication par action, vidéos dans `videos/`.
   Preuve : `moteur comparer` contre l'ancien `build.py`, sites identiques. PR #1.
+- 27/11/2026 — PR #1 fusionnée (26/11, `fdd2832`) ; Pages publiée par l'action « Publier le site » (source : GitHub Actions) ;
+  « Preuve M1 » verte sur main. Étiquette `avant-moteur` posée. M1 terminé.
