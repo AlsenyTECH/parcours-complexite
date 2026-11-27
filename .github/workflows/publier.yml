@@ -26,6 +26,8 @@ jobs:
           python-version: "3.12"
       - name: Installer le moteur
         run: pip install -r requirements.txt
+      - name: Vérifier le parcours (statuts, cles.lock, vidéos, liens)
+        run: moteur verifier
       - name: Construire le site
         run: moteur construire
       - name: Vérifier les nombres des modules rédigés

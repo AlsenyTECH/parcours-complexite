@@ -1,0 +1,7 @@
+# cles.lock — clés des étapes publiées de ce parcours.
+# Mis à jour par « moteur verifier --maj-cles », qui ajoute seulement.
+# Une clé listée ici ne doit jamais disparaître du registre ni changer de nom :
+# la progression des élèves y est accrochée. Retirer une clé se fait à la main, en le sachant.
+m0-attaque
+m0-deux-algos
+m3-insertion

@@ -15,7 +15,7 @@ def pages(site):
 
 def page_accueil(site):
     total = sum(len(m.etapes) for m in site.parcours.parties)
-    redigees = sum(1 for m in site.parcours.parties for e in m.etapes if e.redigee)
+    redigees = sum(1 for m in site.parcours.parties for e in m.etapes if e.publiee)
     cartes = []
     for m in site.parcours.parties:
         items = []
@@ -24,7 +24,7 @@ def page_accueil(site):
             if e.examen:
                 pas = ' <span class="pastille exam">examen</span>'
             items.append('<li data-id="%s"%s><span class="n">%s</span><a href="%s#%s">%s</a>%s</li>'
-                         % (e.id, ' class="redige"' if e.redigee else '', site.parcours.numero(e.id), m.fichier, e.id,
+                         % (e.id, ' class="redige"' if e.publiee else '', site.parcours.numero(e.id), m.fichier, e.id,
                             html.escape(e.titre), pas))
         cartes.append('<article class="mod-carte" data-module="%d" data-etapes="%s">'
                       '<h3><a href="%s"><span class="mod-num">%d</span>%s</a></h3><p>%s</p>'

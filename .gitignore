@@ -5,3 +5,4 @@ outils/video/modeles/
 outils/video/node_modules/
 .venv/
 _site/
+_apercu/
