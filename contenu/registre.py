@@ -6,6 +6,7 @@ et dans la liste « prérequis » des étapes qui la citent. Le cours d'une éta
 contenu/moduleN.py (dictionnaire CORPS). Seul le cours des étapes publiées sort : une étape sans statut
 est un brouillon et la page affiche sa fiche. Pour publier : statut="publie", puis « moteur verifier --maj-cles »
 (la clé entre dans cles.lock et ne devra plus jamais changer).
+Sur la plateforme, une étape est « inscrit » par défaut (élèves validés) ; acces="public" la met en vitrine.
 
 Les classes Etape et Partie, l'index, la numérotation et le contrôle des prérequis viennent du
 moteur (mathnexus-moteur, moteur/registre.py). Un module de ce parcours est une Partie du moteur.
@@ -17,7 +18,7 @@ PARTIES = [
     Module(0, "Pourquoi la complexité", "Deux algorithmes justes peuvent différer d'un facteur un milliard. Mesurer, c'est choisir.", [
         E("m0-deux-algos", "Deux algorithmes, un même problème", 25,
           "Comparer recherche séquentielle et dichotomique sur un million de valeurs, et dire pourquoi l'une gagne.",
-          cours="Cours 1, Introduction", statut="publie"),
+          cours="Cours 1, Introduction", statut="publie", acces="public"),
         E("m0-attaque", "Ce que coûte une attaque", 25,
           "Estimer le temps d'une recherche exhaustive de clé et comprendre pourquoi 128 bits suffisent.",
           ["m0-deux-algos"], statut="publie"),

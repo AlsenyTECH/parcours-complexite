@@ -1,4 +1,4 @@
-# Réglages du parcours, lus par « moteur construire » (mathnexus-moteur).
+# Réglages du parcours, lus par « moteur construire » et « moteur paquet » (mathnexus-moteur).
 # Le moteur s'installe avec : pip install -r requirements.txt
 
 [parcours]
@@ -8,8 +8,13 @@ sous_titre = "Mesurer, calculer, comparer — de la boucle au cryptosystème"
 description = "Un parcours complet et interactif sur la complexité des algorithmes : notations asymptotiques, analyse des boucles et des récursions, classes P et NP, et application aux algorithmes cryptographiques."
 auteur = "MathNexus"
 annee = 2026
+# Identité sur la plateforme Mathnexus (moteur paquet) : le slug ne change plus une fois importé.
+slug = "complexite-algorithmes"
+matiere = "Informatique"
+cycle = "universite"
 
 [site]
+url = "https://alsenytech.github.io/parcours-complexite/"   # le paquet y lit les vidéos et y envoie les liens relatifs
 sortie = "_site"                 # site construit, ignoré par Git ; publié par l'action « Publier le site »
 videos = "videos"                # vidéos du parcours (dans Git jusqu'au passage à Bunny Stream, M6)
 prefixe_stockage = "complexite"  # clés localStorage : tous les sites partagent alsenytech.github.io
