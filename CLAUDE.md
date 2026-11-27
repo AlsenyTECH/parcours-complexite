@@ -134,5 +134,6 @@ le paquet les sort sous forme statique avec un attribut `data-composant` : la pl
   construction ; « Preuve M1 » (contre l'ancien build.py) toujours verte.
 - 27/11/2026 — M3 : moteur v0.3.0. `slug`, `matiere`, `cycle` et `[site] url` dans parcours.toml, 0.1 en `acces="public"`,
   `_paquet/` ignoré, paquet construit deux fois et joint par l'action « Publier le site ». Preuves : `moteur comparer`
-  site v0.2.0 / site v0.3.0 → sites identiques ; deux `moteur paquet` → même empreinte ; paquet importé par
-  `importer_paquet` dans la plateforme locale.
+  site v0.2.0 / site v0.3.0 → sites identiques ; deux `moteur paquet` → même empreinte (`b65da349…05391`, 83 166 octets,
+  **la même sous Windows et sous Linux**) ; paquet importé par Alseny avec `importer_paquet` dans sa plateforme locale
+  (Windows, SQLite) → « complexite-algorithmes v1 (Brouillon) : 3 étapes », réimport refusé (« identique »). **M3 terminé.**
